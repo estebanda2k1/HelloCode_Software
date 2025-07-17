@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="mainPane" prefHeight="852.0" prefWidth="393.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gamificacion_Modulo.GUI.MainGamificacionController">
+   <center>
+      <!-- Content Area - will be dynamically loaded -->
+      <StackPane fx:id="contentPane" />
+   </center>
+   
+   <bottom>
+      <!-- Bottom Navigation -->
+      <HBox alignment="CENTER" prefHeight="87.0" prefWidth="393.0" styleClass="card" style="-fx-background-color: #ffffff; -fx-border-color: #e9ecef; -fx-border-width: 1px 0 0 0;">
+         <children>
+            <Button fx:id="btnHome" mnemonicParsing="false" onAction="#onHomeClicked" prefHeight="58.0" prefWidth="80.0" styleClass="nav-button" text="🏠">
+               <tooltip>
+                  <Tooltip text="Inicio" />
+               </tooltip>
+            </Button>
+            <Button fx:id="btnDesafios" mnemonicParsing="false" onAction="#onDesafiosClicked" prefHeight="58.0" prefWidth="80.0" styleClass="nav-button" text="🎯">
+               <tooltip>
+                  <Tooltip text="Desafíos" />
+               </tooltip>
+            </Button>
+            <Button fx:id="btnLogros" mnemonicParsing="false" onAction="#onLogrosClicked" prefHeight="58.0" prefWidth="80.0" styleClass="nav-button" text="🏆">
+               <tooltip>
+                  <Tooltip text="Logros" />
+               </tooltip>
+            </Button>
+            <Button fx:id="btnRanking" mnemonicParsing="false" onAction="#onRankingClicked" prefHeight="58.0" prefWidth="80.0" styleClass="nav-button" text="📊">
+               <tooltip>
+                  <Tooltip text="Ranking" />
+               </tooltip>
+            </Button>
+            <Button fx:id="btnPerfil" mnemonicParsing="false" onAction="#onPerfilClicked" prefHeight="58.0" prefWidth="80.0" styleClass="nav-button" text="👤">
+               <tooltip>
+                  <Tooltip text="Perfil" />
+               </tooltip>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </HBox>
+   </bottom>
+   
+   <top>
+      <!-- Top Header -->
+      <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="393.0" styleClass="card" style="-fx-background-color: #4CAF50;">
+         <children>
+            <Label fx:id="lblTitulo" styleClass="title" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: bold;" text="Gamificación" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="btnEstadisticas" mnemonicParsing="false" onAction="#onEstadisticasClicked" style="-fx-background-color: transparent; -fx-text-fill: white;" text="📈">
+               <tooltip>
+                  <Tooltip text="Estadísticas" />
+               </tooltip>
+            </Button>
+         </children>
+         <padding>
+            <Insets left="20.0" right="20.0" />
+         </padding>
+      </HBox>
+   </top>
+</BorderPane>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="mainPane" prefHeight="852.0" prefWidth="393.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gamificacion_Modulo.GUI.PerfilUsuarioController">
+   <children>
+      <!-- Header Navigation -->
+      <HBox alignment="CENTER" layoutX="0.0" layoutY="765.0" prefHeight="87.0" prefWidth="393.0" style="-fx-background-color: #ffffff; -fx-border-color: #000000; -fx-border-width: 1px;">
+         <children>
+            <Button fx:id="btnHome" mnemonicParsing="false" onAction="#onHomeClicked" prefHeight="58.0" prefWidth="64.0" style="-fx-background-color: #ffffff;" text="Home" />
+            <Button fx:id="btnProfile" mnemonicParsing="false" onAction="#onProfileClicked" prefHeight="58.0" prefWidth="64.0" style="-fx-background-color: #ffffff;" text="Perfil" />
+            <Button fx:id="btnRanking" mnemonicParsing="false" onAction="#onRankingClicked" prefHeight="58.0" prefWidth="64.0" style="-fx-background-color: #ffffff;" text="Ranking" />
+         </children>
+         <padding>
+            <Insets left="20.0" right="20.0" />
+         </padding>
+      </HBox>
+      
+      <!-- User Profile Section -->
+      <VBox alignment="TOP_CENTER" layoutX="20.0" layoutY="20.0" prefHeight="700.0" prefWidth="353.0" spacing="20.0">
+         <children>
+            <!-- Avatar and User Info -->
+            <VBox alignment="CENTER" spacing="10.0">
+               <children>
+                  <ImageView fx:id="userAvatar" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@assets/default_avatar.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="lblNombreUsuario" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="Evelin" />
+                  <Label fx:id="lblUsername" style="-fx-font-size: 16px; -fx-text-fill: #666666;" text="@everoxha" />
+               </children>
+            </VBox>
+            
+            <!-- Experience Section -->
+            <HBox alignment="CENTER" spacing="20.0">
+               <children>
+                  <VBox alignment="CENTER" spacing="5.0">
+                     <children>
+                        <ImageView fx:id="iconoExperiencia" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/icono_experiencia.png" />
+                           </image>
+                        </ImageView>
+                        <Label style="-fx-font-size: 12px; -fx-font-weight: bold;" text="EXP" />
+                        <Label style="-fx-font-size: 12px;" text="Totales" />
+                        <Label fx:id="lblExpTotal" style="-fx-font-size: 18px; -fx-font-weight: bold;" text="14602" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            
+            <!-- Achievements Section -->
+            <VBox alignment="CENTER" spacing="15.0">
+               <children>
+                  <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Logros" />
+                  <HBox alignment="CENTER" spacing="20.0">
+                     <children>
+                        <VBox alignment="CENTER" spacing="5.0">
+                           <children>
+                              <ImageView fx:id="logroPrincipiante" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/logro_principiante.png" />
+                                 </image>
+                              </ImageView>
+                              <Label style="-fx-font-size: 12px;" text="Principiante" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="5.0">
+                           <children>
+                              <ImageView fx:id="logroDedicado" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/logro_dedicado.png" />
+                                 </image>
+                              </ImageView>
+                              <Label style="-fx-font-size: 12px;" text="Dedicado" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="5.0">
+                           <children>
+                              <ImageView fx:id="logroAcumulador" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/logro_acumulador.png" />
+                                 </image>
+                              </ImageView>
+                              <Label style="-fx-font-size: 12px;" text="Acumulador" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            
+            <!-- Challenges Summary Section -->
+            <VBox alignment="CENTER" spacing="15.0">
+               <children>
+                  <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="RESUMEN" />
+                  <Label style="-fx-font-size: 16px; -fx-font-weight: bold;" text="Desafíos" />
+                  
+                  <!-- Weekly Challenges -->
+                  <HBox alignment="CENTER_LEFT" spacing="20.0">
+                     <children>
+                        <VBox alignment="CENTER" spacing="5.0">
+                           <children>
+                              <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Semanales" />
+                              <Label fx:id="lblDesafiosSemanales" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="14" />
+                           </children>
+                        </VBox>
+                        <Button fx:id="btnVerProgresoSemanal" mnemonicParsing="false" onAction="#onVerProgresoSemanalClicked" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Ver progreso" />
+                     </children>
+                  </HBox>
+                  
+                  <!-- Monthly Challenges -->
+                  <HBox alignment="CENTER_LEFT" spacing="20.0">
+                     <children>
+                        <VBox alignment="CENTER" spacing="5.0">
+                           <children>
+                              <Label style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Mensuales" />
+                              <Label fx:id="lblDesafiosMensuales" style="-fx-font-size: 20px; -fx-font-weight: bold;" text="23" />
+                           </children>
+                        </VBox>
+                        <Button fx:id="btnVerProgresoMensual" mnemonicParsing="false" onAction="#onVerProgresoMensualClicked" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Ver progreso" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="mainPane" prefHeight="852.0" prefWidth="393.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gamificacion_Modulo.GUI.DetalleDesafioController">
+   <children>
+      <!-- Header with Back Button -->
+      <HBox alignment="CENTER_LEFT" layoutX="0.0" layoutY="0.0" prefHeight="60.0" prefWidth="393.0" styleClass="card" style="-fx-background-color: #4CAF50;">
+         <children>
+            <Button fx:id="btnVolver" mnemonicParsing="false" onAction="#onVolverClicked" style="-fx-background-color: transparent; -fx-text-fill: white;" text="←" />
+            <Label fx:id="lblTitulo" styleClass="title" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;" text="Detalle del Desafío" />
+         </children>
+         <padding>
+            <Insets left="20.0" right="20.0" />
+         </padding>
+      </HBox>
+      
+      <!-- Content -->
+      <ScrollPane fx:id="scrollContent" fitToWidth="true" layoutX="0.0" layoutY="60.0" prefHeight="705.0" prefWidth="393.0">
+         <content>
+            <VBox alignment="TOP_CENTER" spacing="20.0">
+               <children>
+                  <!-- Challenge Header -->
+                  <VBox alignment="CENTER" spacing="15.0" styleClass="card">
+                     <children>
+                        <ImageView fx:id="imgDesafio" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                        <Label fx:id="lblNombreDesafio" styleClass="title" text="Nombre del Desafío" />
+                        <Label fx:id="lblDescripcion" styleClass="body-text" text="Descripción del desafío" wrapText="true" />
+                        <HBox alignment="CENTER" spacing="20.0">
+                           <children>
+                              <VBox alignment="CENTER" spacing="5.0">
+                                 <children>
+                                    <Label fx:id="lblRecompensa" styleClass="stat-number" text="500" />
+                                    <Label styleClass="stat-label" text="EXP" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER" spacing="5.0">
+                                 <children>
+                                    <Label fx:id="lblTiempo" styleClass="stat-number" text="7" />
+                                    <Label styleClass="stat-label" text="Días" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                        <Label fx:id="lblEstado" styleClass="challenge-status" text="Estado" />
+                     </children>
+                  </VBox>
+                  
+                  <!-- Progress Section -->
+                  <VBox alignment="CENTER" spacing="15.0" styleClass="card">
+                     <children>
+                        <Label styleClass="subtitle" text="Progreso" />
+                        <VBox alignment="CENTER" spacing="10.0">
+                           <children>
+                              <ProgressBar fx:id="progressDesafio" prefWidth="300.0" progress="0.0" styleClass="progress-bar" />
+                              <Label fx:id="lblProgreso" styleClass="body-text" text="0 / 10 completado" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+                  
+                  <!-- Requirements Section -->
+                  <VBox alignment="CENTER_LEFT" spacing="15.0" styleClass="card">
+                     <children>
+                        <Label styleClass="subtitle" text="Requisitos" />
+                        <VBox fx:id="vboxRequisitos" spacing="10.0">
+                           <!-- Requirements will be added dynamically -->
+                        </VBox>
+                     </children>
+                  </VBox>
+                  
+                  <!-- Rewards Section -->
+                  <VBox alignment="CENTER_LEFT" spacing="15.0" styleClass="card">
+                     <children>
+                        <Label styleClass="subtitle" text="Recompensas" />
+                        <HBox alignment="CENTER_LEFT" spacing="15.0">
+                           <children>
+                              <VBox alignment="CENTER" spacing="5.0">
+                                 <children>
+                                    <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@assets/icono_experiencia.png" />
+                                       </image>
+                                    </ImageView>
+                                    <Label fx:id="lblExpRecompensa" styleClass="body-text" text="500 EXP" />
+                                 </children>
+                              </VBox>
+                              <VBox fx:id="vboxRecompensasExtra" alignment="CENTER" spacing="5.0">
+                                 <!-- Additional rewards will be added dynamically -->
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  
+                  <!-- Action Buttons -->
+                  <HBox alignment="CENTER" spacing="20.0">
+                     <children>
+                        <Button fx:id="btnIniciar" mnemonicParsing="false" onAction="#onIniciarDesafio" styleClass="primary-button" text="Iniciar Desafío" />
+                        <Button fx:id="btnCompletar" mnemonicParsing="false" onAction="#onCompletarDesafio" styleClass="secondary-button" text="Marcar Completo" visible="false" />
+                        <Button fx:id="btnReiniciar" mnemonicParsing="false" onAction="#onReiniciarDesafio" styleClass="secondary-button" text="Reiniciar" visible="false" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+      
+      <!-- Bottom Navigation -->
+      <HBox alignment="CENTER" layoutX="0.0" layoutY="765.0" prefHeight="87.0" prefWidth="393.0" styleClass="card" style="-fx-background-color: #ffffff; -fx-border-color: #e9ecef; -fx-border-width: 1px 0 0 0;">
+         <children>
+            <Button fx:id="btnHome" mnemonicParsing="false" onAction="#onHomeClicked" prefHeight="58.0" prefWidth="80.0" styleClass="nav-button" text="🏠" />
+            <Button fx:id="btnDesafios" mnemonicParsing="false" onAction="#onDesafiosClicked" prefHeight="58.0" prefWidth="80.0" styleClass="nav-button" text="🎯" />
+            <Button fx:id="btnLogros" mnemonicParsing="false" onAction="#onLogrosClicked" prefHeight="58.0" prefWidth="80.0" styleClass="nav-button" text="🏆" />
+            <Button fx:id="btnRanking" mnemonicParsing="false" onAction="#onRankingClicked" prefHeight="58.0" prefWidth="80.0" styleClass="nav-button" text="📊" />
+            <Button fx:id="btnPerfil" mnemonicParsing="false" onAction="#onPerfilClicked" prefHeight="58.0" prefWidth="80.0" styleClass="nav-button" text="👤" />
+         </children>
+         <padding>
+            <Insets left="10.0" right="10.0" />
+         </padding>
+      </HBox>
+   </children>
+</AnchorPane>

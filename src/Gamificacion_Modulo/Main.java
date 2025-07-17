@@ -1,15 +1,122 @@
 package Gamificacion_Modulo;
 
 import java.util.*;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
-public class Main {
-    private static Scanner scanner = new Scanner(System.in);
-    private static List<Estudiante> estudiantes = new ArrayList<>();
-    private static List<Logro> logrosDisponibles = new ArrayList<>();
-    private static Ranking ranking = new Ranking();
-    private static List<ProgresoEstudiante> progresos = new ArrayList<>();
+public class Main extends Application {
+    private static final List<Estudiante> estudiantes = new ArrayList<>();
+    private static final List<Logro> logrosDisponibles = new ArrayList<>();
+    private static final Ranking ranking = new Ranking();
+    private static final List<ProgresoEstudiante> progresos = new ArrayList<>();
+    private static Scanner scanner;
 
+    @Override
+    public void start(Stage stage) throws Exception {
+        // Cargar la interfaz FXML principal
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GUI/MainGamificacion.fxml"));
+            Parent root = loader.load();
+            
+            Scene scene = new Scene(root);
+            stage.setTitle("Sistema de Gamificación - HelloCode");
+            stage.setScene(scene);
+            stage.setResizable(false); // Mantener tamaño fijo como móvil
+            stage.show();
+            
+            System.out.println(">>> Interfaz gráfica cargada correctamente");
+        } catch (Exception e) {
+            System.err.println("Error al cargar la interfaz gráfica: " + e.getMessage());
+            e.printStackTrace();
+            
+            // Fallback: mostrar ventana simple si falla la carga del FXML
+            mostrarVentanaSimple(stage);
+        }
+    }
+    
+    private void mostrarVentanaSimple(Stage stage) {
+        StackPane layout = new StackPane();
+        Button button = new Button("Sistema de Gamificación");
+        button.setOnAction(actionEvent -> {
+            System.out.println("Interfaz gráfica no disponible. Usa la consola.");
+            mostrarMenuConsola();
+        });
+        
+        layout.getChildren().add(button);
+        Scene scene = new Scene(layout, 393, 852);
+        stage.setScene(scene);
+        stage.setTitle("Sistema de Gamificación - Modo Consola");
+        stage.show();
+    }
+    
+    private void mostrarMenuConsola() {
+        System.out.println("\n=== MODO CONSOLA ACTIVADO ===");
+        System.out.println("La interfaz gráfica no está disponible.");
+        System.out.println("Cierra esta ventana y ejecuta el programa desde la consola.");
+    }
+    
+    public static void mostrarGUI() {
+        System.out.println(">>> Iniciando interfaz gráfica...");
+        launch();
+    }
+    
+    // Métodos para acceder a los datos desde los controladores
+    public static List<Estudiante> getEstudiantes() {
+        return estudiantes;
+    }
+    
+    public static List<Logro> getLogrosDisponibles() {
+        return logrosDisponibles;
+    }
+    
+    public static Ranking getRanking() {
+        return ranking;
+    }
+    
+    public static List<ProgresoEstudiante> getProgresos() {
+        return progresos;
+    }
+    
     public static void main(String[] args) {
+        // Inicializar datos del sistema
+        inicializarDatos();
+        
+        // Mostrar opciones de interfaz
+        System.out.println("*** BIENVENIDO AL SISTEMA DE GAMIFICACION ***");
+        System.out.println("===============================================");
+        System.out.println("Selecciona el modo de interfaz:");
+        System.out.println("1. Interfaz Gráfica (GUI con FXML)");
+        System.out.println("2. Interfaz de Consola");
+        System.out.print(">> Opción (1-2): ");
+        
+        Scanner seleccionScanner = new Scanner(System.in);
+        int opcion = 0;
+        try {
+            opcion = seleccionScanner.nextInt();
+            seleccionScanner.nextLine(); // Limpiar buffer
+        } catch (Exception e) {
+            System.out.println(">>> Opción inválida, usando consola por defecto");
+            opcion = 2;
+        }
+        
+        switch (opcion) {
+            case 1:
+                mostrarGUI();
+                break;
+            case 2:
+            default:
+                ejecutarModoConsola();
+                break;
+        }
+        seleccionScanner.close();
+    }
+    
+    private static void inicializarDatos() {
         // Crear estudiante principal
         Estudiante estudiante = new Estudiante("Juan Pérez", "juan@email.com", "juan123");
         ProgresoEstudiante progreso = new ProgresoEstudiante(estudiante);
@@ -22,8 +129,11 @@ public class Main {
 
         // Inicializar logros predeterminados
         inicializarLogros();
-
-        System.out.println("*** BIENVENIDO AL SISTEMA DE GAMIFICACION ***");
+    }
+    
+    private static void ejecutarModoConsola() {
+        scanner = new Scanner(System.in);
+        System.out.println("\n*** MODO CONSOLA ACTIVADO ***");
         System.out.println("===============================================");
 
         boolean continuar = true;
@@ -145,7 +255,7 @@ public class Main {
         DesafioSemanal desafio = new DesafioSemanal(meta, logrosDesafio);
 
         desafio.activar();
-        progreso.agregarDesafio(desafio); // Añadir al progreso del estudiante
+        progreso.agregarDesafio(desafio);
 
         System.out.println(">>> Desafio semanal creado para " + progreso.getEstudiante().getNombre() + " con meta de " + meta + " actividades");
         System.out.println("Logros asociados: ");
@@ -173,7 +283,7 @@ public class Main {
         DesafioMensual desafio = new DesafioMensual(meta, logrosDesafio);
 
         desafio.activar();
-        progreso.agregarDesafio(desafio); // Añadir al progreso del estudiante
+        progreso.agregarDesafio(desafio);
 
         System.out.println(">>> Desafio mensual creado para " + progreso.getEstudiante().getNombre() + " con meta de " + meta + " actividades");
         System.out.println("Logros asociados: ");
@@ -278,11 +388,9 @@ public class Main {
                 ((DesafioMensual) desafio).actualizarActividades(actividades);
             }
 
-            // Actualizar progreso
             progreso.actualizarProgreso(desafio);
             ranking.actualizarRanking(progreso);
 
-            // Remover desafio si esta completado
             if (desafio.estaCompletado() && !desafio.getEstaActivo()) {
                 desafiosActivos.remove(desafio);
                 System.out.println("*** Desafio completado y removido de la lista activa!");
