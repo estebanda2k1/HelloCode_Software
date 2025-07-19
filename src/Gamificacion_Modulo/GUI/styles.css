@@ -17,6 +17,44 @@
     -fx-background-color: #4CAF50;
 }
 
+#btnClose {
+    -fx-cursor: hand;
+    cursor: pointer;
+    -fx-background-radius: 0;
+    -fx-text-fill: #333333;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+}
+
+#btnClose:hover {
+    -fx-background-color: #f0f0f0;
+}
+
+#btnClose:pressed {
+    -fx-background-color: #e0e0e0;
+}
+
+.nav-button {
+    -fx-background-color: #A6B1E1;
+    -fx-background-radius: 5;
+    -fx-min-width: 57;
+    -fx-min-height: 52;
+    -fx-padding: 8;
+}
+
+.nav-button:hover {
+    -fx-background-color: #f5f5f5;
+}
+
+.nav-button:pressed {
+    -fx-background-color: #e0e0e0;
+}
+
+.nav-button.selected {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: #4CAF50;
+}
+
 .warning-color {
     -fx-background-color: #FF9800;
 }
@@ -130,9 +168,16 @@
 }
 
 .section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #424874;
+    -fx-padding: 10 0;
+}
+
+.section-subtitle {
     -fx-font-size: 16px;
     -fx-font-weight: bold;
-    -fx-text-fill: #666666;
+    -fx-text-fill: #424874;
 }
 
 .body-text {
@@ -356,4 +401,127 @@
 
 .no-padding {
     -fx-padding: 0;
+}
+
+.gamificacion {
+    -fx-background-color: #ffffff;
+}
+
+.profile-container {
+    -fx-background-color: #ffffff;
+    -fx-padding: 20;
+    -fx-spacing: 15;
+}
+
+.profile-header {
+    -fx-background-color: #424874;
+    -fx-padding: 20;
+    -fx-min-height: 195;
+}
+
+.profile-picture {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 5, 0, 0, 0);
+}
+
+.profile-name {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #424874;
+}
+
+.profile-username {
+    -fx-font-size: 16px;
+    -fx-text-fill: #666666;
+}
+
+.section-title {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #424874;
+    -fx-padding: 10 0;
+}
+
+.section-subtitle {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #424874;
+}
+
+.exp-summary {
+    -fx-padding: 15;
+    -fx-background-color: #F4EEFF;
+    -fx-background-radius: 10;
+}
+
+.exp-total {
+    -fx-alignment: center;
+}
+
+.exp-value {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #424874;
+}
+
+.challenge-stats {
+    -fx-padding: 10;
+    -fx-spacing: 20;
+}
+
+.challenge-item {
+    -fx-alignment: center;
+    -fx-spacing: 5;
+    -fx-background-color: #DCD6F7;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+}
+
+.challenge-value {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #424874;
+}
+
+.challenge-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #666666;
+}
+
+.achievement-list {
+    -fx-padding: 10;
+    -fx-spacing: 15;
+}
+
+.achievement-item {
+    -fx-alignment: center;
+    -fx-spacing: 5;
+    -fx-background-color: #F4EEFF;
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+}
+
+.achievement-item Label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #424874;
+}
+
+.progress-link {
+    -fx-text-fill: #A6B1E1;
+    -fx-underline: false;
+}
+
+.progress-link:hover {
+    -fx-underline: true;
+}
+
+.bottom-navigation {
+    -fx-padding: 15;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0, 0, 0);
+    -fx-border-color: #000000;
+    -fx-border-width: 1;
+}
+
+.bottom-navigation ImageView {
+    -fx-cursor: hand;
 }

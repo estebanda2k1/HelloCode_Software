@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import java.net.URL?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="Gamificacion_Modulo.GUI.controllers.PerfilUsuarioController"
+      styleClass="gamificacion"
+      spacing="10"
+      prefWidth="393"
+      prefHeight="852">
+
+    <stylesheets>
+        <URL value="@../styles.css"/>
+    </stylesheets>
+
+    <VBox styleClass="profile-container">
+        <!-- Header con foto de perfil -->
+        <StackPane styleClass="profile-header">
+            <ImageView fitWidth="120" fitHeight="120" styleClass="profile-picture">
+                <Image url="@../assets/default_avatar.svg"/>
+            </ImageView>
+        </StackPane>
+
+        <VBox styleClass="profile-content" spacing="15">
+            <!-- Información del perfil -->
+            <Label text="Evelin" styleClass="profile-name"/>
+            <Label text="@everoxha" styleClass="profile-username"/>
+
+            <Label text="RESUMEN" styleClass="section-title"/>
+
+            <!-- Resumen de EXP -->
+            <HBox styleClass="exp-summary" alignment="CENTER" spacing="20">
+                <HBox styleClass="exp-total" alignment="CENTER" spacing="10">
+                    <ImageView fitWidth="40" fitHeight="40" styleClass="exp-icon">
+                        <Image url="@../assets/icono_experiencia.png"/>
+                    </ImageView>
+                    <Label text="EXP&#10;Totales" textAlignment="CENTER"/>
+                </HBox>
+                <Label text="14602" styleClass="exp-value"/>
+            </HBox>
+
+            <!-- Sección de Desafíos -->
+            <VBox styleClass="challenges" spacing="10">
+                <HBox alignment="CENTER_LEFT" spacing="50">
+                    <Label text="Desafíos" styleClass="section-subtitle"/>
+                    <Hyperlink text="Ver progreso" styleClass="progress-link"/>
+                </HBox>
+
+                <HBox styleClass="challenge-stats" spacing="30">
+                    <VBox styleClass="challenge-item" alignment="CENTER">
+                        <Label text="14" styleClass="challenge-value"/>
+                        <Label text="Semanales" styleClass="challenge-label"/>
+                    </VBox>
+                    <VBox styleClass="challenge-item" alignment="CENTER">
+                        <Label text="23" styleClass="challenge-value"/>
+                        <Label text="Mensuales" styleClass="challenge-label"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+
+            <!-- Sección de Logros -->
+            <VBox styleClass="achievements" spacing="10">
+                <HBox alignment="CENTER_LEFT" spacing="50">
+                    <Label text="Logros" styleClass="section-subtitle"/>
+                    <Hyperlink text="Ver progreso" styleClass="progress-link"/>
+                </HBox>
+
+                <HBox styleClass="achievement-list" spacing="20">
+                    <VBox styleClass="achievement-item" alignment="CENTER">
+                        <ImageView fitWidth="60" fitHeight="60">
+                            <Image url="@../assets/logro_principiante.png"/>
+                        </ImageView>
+                        <Label text="Principiante"/>
+                    </VBox>
+                    <VBox styleClass="achievement-item" alignment="CENTER">
+                        <ImageView fitWidth="60" fitHeight="60">
+                            <Image url="@../assets/logro_dedicado.png"/>
+                        </ImageView>
+                        <Label text="Dedicado"/>
+                    </VBox>
+                    <VBox styleClass="achievement-item" alignment="CENTER">
+                        <ImageView fitWidth="60" fitHeight="60">
+                            <Image url="@../assets/logro_acumulador.png"/>
+                        </ImageView>
+                        <Label text="Acumulador"/>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </VBox>
+
+        <!-- Barra de navegación inferior -->
+        <HBox styleClass="bottom-navigation" alignment="CENTER" spacing="30">
+            <ImageView fitWidth="30" fitHeight="30">
+                <Image url="@../assets/Rectangle 23.png"/>
+            </ImageView>
+            <ImageView fitWidth="30" fitHeight="30">
+                <Image url="@../assets/Rectangle 13.png"/>
+            </ImageView>
+            <ImageView fitWidth="30" fitHeight="30">
+                <Image url="@../assets/image 11.png"/>
+            </ImageView>
+        </HBox>
+    </VBox>
+</VBox>

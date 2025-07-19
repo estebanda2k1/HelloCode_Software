@@ -18,15 +18,26 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        // Cargar la interfaz FXML principal
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GUI/MainGamificacion.fxml"));
+            // Cargar la interfaz FXML principal
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Gamificacion_Modulo/GUI/fxml/PerfilUsuario.fxml"));
             Parent root = loader.load();
             
-            Scene scene = new Scene(root);
+            // Configurar la escena con las dimensiones de móvil
+            Scene scene = new Scene(root, 393, 852);
+
+            // Configurar la ventana
             stage.setTitle("Sistema de Gamificación - HelloCode");
             stage.setScene(scene);
-            stage.setResizable(false); // Mantener tamaño fijo como móvil
+            stage.setResizable(false);
+            stage.centerOnScreen(); // Centrar en la pantalla
+            
+            // Establecer tamaño mínimo y máximo
+            stage.setMinWidth(360);
+            stage.setMaxWidth(360);
+            stage.setMinHeight(740);
+            stage.setMaxHeight(740);
+            
             stage.show();
             
             System.out.println(">>> Interfaz gráfica cargada correctamente");
