@@ -1,0 +1,6 @@
+.idea/
+HelloCode_Software.iml
+out/
+.gitignore
+*.class
+front/

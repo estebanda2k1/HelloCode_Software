@@ -35,12 +35,17 @@ public class DesafiosController {
         }
     }
 
-    // Botón 3 (derecha) - Ranking/Desafíos - se queda en Desafíos
+    // Botón 3 (derecha) - Ranking - navegar a Ranking.fxml
     @FXML
     private void onRankingClicked(ActionEvent event) {
-        System.out.println(">>> Ya estás en la pantalla de Desafíos (Ranking)");
-        // Ya estamos en la pantalla de desafíos, podríamos mostrar diferentes secciones
-        // o simplemente indicar que ya estamos aquí
+        System.out.println(">>> Navegando a Ranking desde Desafíos");
+        try {
+            // Cargar Ranking.fxml
+            Main.cambiarEscena("GUI/fxml/Ranking.fxml");
+        } catch (Exception e) {
+            System.err.println("Error al navegar a Ranking: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     // Método de inicialización

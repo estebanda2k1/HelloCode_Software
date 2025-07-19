@@ -53,15 +53,15 @@ public class PerfilUsuarioController {
         contenido.getChildren().add(new Label("Perfil de Usuario - Pantalla Actual"));
     }
 
-    // Botón 3 (derecha) - navegar a Desafíos
+    // Botón 3 (derecha) - navegar a Ranking
     @FXML
     private void navButton3() {
-        System.out.println(">>> Navegando a Desafíos desde Perfil de Usuario (botón 3)");
+        System.out.println(">>> Navegando a Ranking desde Perfil de Usuario");
         try {
-            // Cargar Desafios.fxml desde la carpeta fxml
-            Main.cambiarEscena("GUI/fxml/Desafios.fxml");
+            // Cargar Ranking.fxml
+            Main.cambiarEscena("GUI/fxml/Ranking.fxml");
         } catch (Exception e) {
-            System.err.println("Error al navegar a Desafios: " + e.getMessage());
+            System.err.println("Error al navegar a Ranking: " + e.getMessage());
             e.printStackTrace();
         }
     }
