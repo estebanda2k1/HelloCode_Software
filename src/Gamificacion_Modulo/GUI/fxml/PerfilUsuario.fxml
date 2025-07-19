@@ -7,11 +7,13 @@
 <?import javafx.geometry.Insets?>
 <?import java.net.URL?>
 
+
+
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="Gamificacion_Modulo.GUI.controllers.PerfilUsuarioController"
       styleClass="gamificacion"
-      spacing="10"
+      spacing="20" alignment="TOP_CENTER"
       prefWidth="393"
       prefHeight="852">
 
@@ -23,14 +25,14 @@
         <!-- Header con foto de perfil -->
         <StackPane styleClass="profile-header">
             <ImageView fitWidth="120" fitHeight="120" styleClass="profile-picture">
-                <Image url="@../assets/default_avatar.svg"/>
+                <Image url="@../assets/default_avatar.png"/>
             </ImageView>
         </StackPane>
 
         <VBox styleClass="profile-content" spacing="15">
             <!-- Información del perfil -->
             <Label text="Evelin" styleClass="profile-name"/>
-            <Label text="@everoxha" styleClass="profile-username"/>
+            <Label text= " @everoxha " styleClass="profile-username"/>
 
             <Label text="RESUMEN" styleClass="section-title"/>
 
@@ -95,16 +97,36 @@
         </VBox>
 
         <!-- Barra de navegación inferior -->
-        <HBox styleClass="bottom-navigation" alignment="CENTER" spacing="30">
-            <ImageView fitWidth="30" fitHeight="30">
-                <Image url="@../assets/Rectangle 23.png"/>
-            </ImageView>
-            <ImageView fitWidth="30" fitHeight="30">
-                <Image url="@../assets/Rectangle 13.png"/>
-            </ImageView>
-            <ImageView fitWidth="30" fitHeight="30">
-                <Image url="@../assets/image 11.png"/>
-            </ImageView>
-        </HBox>
     </VBox>
+    <HBox fx:id="bottomNavigation" spacing="30" alignment="CENTER" styleClass="bottom-navigation">
+        <Button fx:id="navButton1" onAction="#navButton1">
+            <graphic>
+                <ImageView fitWidth="32" fitHeight="32" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/Rectangle 23.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <Button fx:id="navButton2" onAction="#navButton2">
+            <graphic>
+                <ImageView fitWidth="32" fitHeight="32" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/Rectangle 13.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
+        <Button fx:id="navButton3" onAction="#navButton3">
+            <graphic>
+                <ImageView fitWidth="32" fitHeight="32" preserveRatio="true">
+                    <image>
+                        <Image url="@../assets/logro_dedicado.png" />
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+    </HBox>
 </VBox>
