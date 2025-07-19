@@ -15,28 +15,73 @@ public class Main extends Application {
     private static final Ranking ranking = new Ranking();
     private static final List<ProgresoEstudiante> progresos = new ArrayList<>();
     private static Scanner scanner;
+    
+    // Campo para almacenar el Stage principal para navegación
+    private static Stage primaryStage;
 
     @Override
     public void start(Stage stage) throws Exception {
-        // Cargar la interfaz FXML principal
+        primaryStage = stage; // Almacenar referencia del Stage principal
+        
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GUI/fxml/Desafios.fxml"));
+            // Prioridad 1: Cargar PerfilUsuario.fxml (Progreso - interfaz principal)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GUI/fxml/PerfilUsuario.fxml"));
             Parent root = loader.load();
             
-            Scene scene = new Scene(root);
+            Scene scene = new Scene(root, 393, 852);
             stage.setTitle("Sistema de Gamificación - HelloCode");
             stage.setScene(scene);
-            stage.setResizable(false); // Mantener tamaño fijo como móvil
+            stage.setResizable(false);
+            stage.centerOnScreen();
             stage.show();
             
-            System.out.println(">>> Interfaz gráfica cargada correctamente");
+            System.out.println(">>> Interfaz gráfica cargada correctamente: PerfilUsuario.fxml (Progreso)");
         } catch (Exception e) {
-            System.err.println("Error al cargar la interfaz gráfica: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("Error al cargar PerfilUsuario.fxml, intentando con Desafios.fxml: " + e.getMessage());
             
-            // Fallback: mostrar ventana simple si falla la carga del FXML
-            mostrarVentanaSimple(stage);
+            try {
+                // Prioridad 2: Cargar Desafios.fxml como fallback
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("GUI/fxml/Desafios.fxml"));
+                Parent root = loader.load();
+                
+                Scene scene = new Scene(root, 393, 852);
+                stage.setTitle("Sistema de Gamificación - HelloCode");
+                stage.setScene(scene);
+                stage.setResizable(false);
+                stage.centerOnScreen();
+                stage.show();
+                
+                System.out.println(">>> Interfaz gráfica cargada correctamente: Desafios.fxml (Fallback)");
+            } catch (Exception e2) {
+                System.err.println("Error al cargar Desafios.fxml: " + e2.getMessage());
+                e2.printStackTrace();
+                
+                // Fallback final: mostrar ventana simple si falla todo
+                mostrarVentanaSimple(stage);
+            }
         }
+    }
+    
+    // Método estático para cambiar escenas desde los controladores
+    public static void cambiarEscena(String fxmlPath) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource(fxmlPath));
+            Parent root = loader.load();
+            
+            Scene scene = new Scene(root, 393, 852);
+            primaryStage.setScene(scene);
+            primaryStage.centerOnScreen();
+            
+            System.out.println(">>> Navegación exitosa a: " + fxmlPath);
+        } catch (Exception e) {
+            System.err.println("Error al cambiar a la escena: " + fxmlPath);
+            e.printStackTrace();
+        }
+    }
+    
+    // Método para obtener referencia del Stage principal
+    public static Stage getPrimaryStage() {
+        return primaryStage;
     }
     
     private void mostrarVentanaSimple(Stage stage) {

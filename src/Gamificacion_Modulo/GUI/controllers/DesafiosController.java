@@ -1,5 +1,6 @@
 package Gamificacion_Modulo.GUI.controllers;
 
+import Gamificacion_Modulo.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
@@ -14,31 +15,38 @@ public class DesafiosController {
     @FXML
     private Button btnRanking;
 
-    // Este es el método que se ejecutará cuando se haga clic en el botón 'Home'
+    // Botón 1 (izquierda) - Home/Inicio - se queda en Desafíos
     @FXML
     private void onHomeClicked(ActionEvent event) {
-        System.out.println(">>> Navegando a Home desde Desafíos");
-        // Aquí puedes agregar la lógica para cambiar la escena o abrir otra vista
+        System.out.println(">>> Ya estás en la pantalla de Desafíos (Home)");
+        // Ya estamos en la pantalla de desafíos, no hacer nada o refrescar
     }
 
-    // Este es el método que se ejecutará cuando se haga clic en el botón 'Perfil'
+    // Botón 2 (centro) - Perfil - navegar a PerfilUsuario.fxml
     @FXML
     private void onProfileClicked(ActionEvent event) {
-        System.out.println(">>> Navegando UE a Perfil desde Desafíos");
-        // Agregar lógica para navegar al perfil
+        System.out.println(">>> Navegando a Perfil de Usuario desde Desafíos");
+        try {
+            // Cargar PerfilUsuario.fxml desde la carpeta fxml
+            Main.cambiarEscena("GUI/fxml/PerfilUsuario.fxml");
+        } catch (Exception e) {
+            System.err.println("Error al navegar a PerfilUsuario: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
-    // Este es el método que se ejecutará cuando se haga clic en el botón 'Ranking'
+    // Botón 3 (derecha) - Ranking/Desafíos - se queda en Desafíos
     @FXML
     private void onRankingClicked(ActionEvent event) {
-        System.out.println(">>> Navegando a Ranking desde Desafíos");
-        // Lógica para mostrar el ranking
+        System.out.println(">>> Ya estás en la pantalla de Desafíos (Ranking)");
+        // Ya estamos en la pantalla de desafíos, podríamos mostrar diferentes secciones
+        // o simplemente indicar que ya estamos aquí
     }
 
-    // Aquí está el método 'initialize' único que debes mantener
+    // Método de inicialización
     @FXML
     private void initialize() {
-        System.out.println("Controlador de Desafíos inicializado");
-        // Puedes agregar cualquier lógica de inicialización aquí
+        System.out.println(">>> Controlador de Desafíos inicializado");
+        // Configuración adicional si es necesaria
     }
 }
