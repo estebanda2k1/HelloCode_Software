@@ -1,68 +1,33 @@
 package Gamificacion_Modulo;
 
 import java.util.*;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
-public class Main extends Application {
+public class Main {
     private static final List<Estudiante> estudiantes = new ArrayList<>();
     private static final List<Logro> logrosDisponibles = new ArrayList<>();
     private static final Ranking ranking = new Ranking();
     private static final List<ProgresoEstudiante> progresos = new ArrayList<>();
+    // Nueva lista para desafíos sin asignar (creados desde GUI)
+    private static final List<Desafio> desafiosSinAsignar = new ArrayList<>();
+    
     private static Scanner scanner;
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        // Cargar la interfaz FXML principal
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GUI/MainGamificacion.fxml"));
-            Parent root = loader.load();
-            
-            Scene scene = new Scene(root);
-            stage.setTitle("Sistema de Gamificación - HelloCode");
-            stage.setScene(scene);
-            stage.setResizable(false); // Mantener tamaño fijo como móvil
-            stage.show();
-            
-            System.out.println(">>> Interfaz gráfica cargada correctamente");
-        } catch (Exception e) {
-            System.err.println("Error al cargar la interfaz gráfica: " + e.getMessage());
-            e.printStackTrace();
-            
-            // Fallback: mostrar ventana simple si falla la carga del FXML
-            mostrarVentanaSimple(stage);
-        }
-    }
-    
-    private void mostrarVentanaSimple(Stage stage) {
-        StackPane layout = new StackPane();
-        Button button = new Button("Sistema de Gamificación");
-        button.setOnAction(actionEvent -> {
-            System.out.println("Interfaz gráfica no disponible. Usa la consola.");
-            mostrarMenuConsola();
-        });
-        
-        layout.getChildren().add(button);
-        Scene scene = new Scene(layout, 393, 852);
-        stage.setScene(scene);
-        stage.setTitle("Sistema de Gamificación - Modo Consola");
-        stage.show();
-    }
-    
-    private void mostrarMenuConsola() {
-        System.out.println("\n=== MODO CONSOLA ACTIVADO ===");
-        System.out.println("La interfaz gráfica no está disponible.");
-        System.out.println("Cierra esta ventana y ejecuta el programa desde la consola.");
-    }
-    
     public static void mostrarGUI() {
-        System.out.println(">>> Iniciando interfaz gráfica...");
-        launch();
+        System.out.println(">>> Intentando iniciar interfaz gráfica...");
+        try {
+            // Verificar si JavaFX está disponible
+            Class.forName("javafx.application.Application");
+            System.out.println(">>> JavaFX detectado en el classpath");
+            System.out.println(">>> Para usar la interfaz gráfica completa, configura JavaFX según las instrucciones");
+            System.out.println(">>> Por ahora, iniciando modo consola con panel de administración disponible");
+            
+        } catch (ClassNotFoundException e) {
+            System.out.println(">>> JavaFX no está configurado en el proyecto");
+            System.out.println(">>> Usando modo consola");
+        }
+        
+        // Siempre usar modo consola por ahora
+        ejecutarModoConsola();
     }
     
     // Métodos para acceder a los datos desde los controladores
@@ -80,6 +45,50 @@ public class Main extends Application {
     
     public static List<ProgresoEstudiante> getProgresos() {
         return progresos;
+    }
+    
+    // Nuevos métodos para gestionar desafíos sin asignar
+    public static List<Desafio> getDesafiosSinAsignar() {
+        return desafiosSinAsignar;
+    }
+    
+    public static void agregarDesafioSinAsignar(Desafio desafio) {
+        desafiosSinAsignar.add(desafio);
+        actualizarEstadisticas();
+        System.out.println(">>> Desafío creado y guardado para asignación posterior");
+    }
+    
+    public static boolean asignarDesafioAEstudiante(Desafio desafio, Estudiante estudiante) {
+        ProgresoEstudiante progreso = buscarProgresoPorId(estudiante.getId());
+        if (progreso != null) {
+            desafio.activar();
+            progreso.agregarDesafio(desafio);
+            desafiosSinAsignar.remove(desafio);
+            actualizarEstadisticas();
+            System.out.println(">>> Desafío '" + desafio.getNombre() + "' asignado a " + estudiante.getNombre());
+            return true;
+        }
+        return false;
+    }
+    
+    private static void actualizarEstadisticas() {
+        try {
+            int totalEstudiantes = estudiantes.size();
+            int totalLogros = logrosDisponibles.size();
+            int totalProgresos = progresos.size();
+            
+            // Contar desafíos activos
+            int desafiosActivos = 0;
+            for (ProgresoEstudiante progreso : progresos) {
+                desafiosActivos += progreso.getDesafiosActivos().size();
+            }
+            
+            System.out.println(">>> Estadísticas actualizadas: Estudiantes: " + totalEstudiantes + 
+                             " | Logros: " + totalLogros + " | Progreso: " + totalProgresos + 
+                             " | Desafíos Activos: " + desafiosActivos);
+        } catch (Exception e) {
+            System.err.println("Error al actualizar estadísticas: " + e.getMessage());
+        }
     }
     
     public static void main(String[] args) {
@@ -172,6 +181,15 @@ public class Main extends Application {
                 case 10:
                     visualizarEstadisticas();
                     break;
+                case 11:
+                    abrirPanelAdministracion();
+                    break;
+                case 12:
+                    mostrarDesafiosSinAsignar();
+                    break;
+                case 13:
+                    asignarDesafioConsola();
+                    break;
                 case 0:
                     continuar = false;
                     System.out.println("Gracias por usar el sistema de gamificacion!");
@@ -205,6 +223,9 @@ public class Main extends Application {
         System.out.println("8. Ver Desafios Activos");
         System.out.println("9. Ver Logros Disponibles");
         System.out.println("10. Visualizar Estadísticas");
+        System.out.println("11. Panel de Administracion (GUI)");
+        System.out.println("12. Ver Desafios Sin Asignar");
+        System.out.println("13. Asignar Desafio a Estudiante");
         System.out.println("0. Salir");
         System.out.print(">> Selecciona una opcion: ");
     }
@@ -596,6 +617,229 @@ public class Main extends Application {
                 System.out.println("   Criterio: " + logro.getCriteriosDesbloqueo());
                 System.out.println();
             }
+        }
+    }
+    
+    private static void abrirPanelAdministracion() {
+        System.out.println("\n=== PANEL DE ADMINISTRACION ===");
+        System.out.println(">>> Intentando abrir panel de administracion grafico...");
+        
+        try {
+            // Verificar si JavaFX está disponible
+            Class.forName("javafx.application.Platform");
+            
+            // Usar Platform.startup en lugar de JFXPanel para evitar problemas de módulos
+            Class<?> platformClass = Class.forName("javafx.application.Platform");
+            
+            // Verificar si Platform.startup está disponible (JavaFX 9+)
+            try {
+                java.lang.reflect.Method startupMethod = platformClass.getMethod("startup", Runnable.class);
+                
+                // Usar startup method
+                startupMethod.invoke(null, (Runnable) () -> {
+                    System.out.println(">>> JavaFX Platform iniciado correctamente");
+                    abrirVentanaAdmin();
+                });
+                
+                System.out.println(">>> Comando enviado. El panel debería abrirse en breve...");
+                
+            } catch (NoSuchMethodException e) {
+                // Platform.startup no disponible, usar runLater directamente
+                System.out.println(">>> Usando método alternativo de inicialización...");
+                inicializarConRunLater(platformClass);
+            }
+            
+        } catch (ClassNotFoundException e) {
+            System.out.println(">>> JavaFX no está disponible en el classpath");
+            mostrarInstruccionesJavaFX();
+        } catch (Exception e) {
+            System.err.println(">>> Error al inicializar JavaFX: " + e.getMessage());
+            System.err.println(">>> Esto puede deberse a configuración incorrecta de módulos");
+            mostrarInstruccionesJavaFXAvanzadas();
+        }
+    }
+    
+    private static void inicializarConRunLater(Class<?> platformClass) {
+        try {
+            java.lang.reflect.Method runLaterMethod = platformClass.getMethod("runLater", Runnable.class);
+            
+            runLaterMethod.invoke(null, (Runnable) () -> {
+                System.out.println(">>> JavaFX Platform inicializado");
+                abrirVentanaAdmin();
+            });
+            
+        } catch (Exception e) {
+            System.err.println(">>> Error con runLater: " + e.getMessage());
+            mostrarAdministracionConsola();
+        }
+    }
+    
+    private static void abrirVentanaAdmin() {
+        try {
+            // Llamar al método de administración
+            Class<?> adminController = Class.forName("Gamificacion_Modulo.GUI.admin.AdminMainController");
+            java.lang.reflect.Method mostrarVentana = adminController.getMethod("mostrarVentanaAdmin");
+            mostrarVentana.invoke(null);
+            
+            System.out.println(">>> Panel de administracion abierto exitosamente!");
+            
+        } catch (Exception e) {
+            System.err.println(">>> Error al abrir panel: " + e.getMessage());
+            mostrarAdministracionConsola();
+        }
+    }
+    
+    private static void mostrarInstruccionesJavaFX() {
+        System.out.println("\n=== CONFIGURACION JAVAFX EN INTELLIJ ===");
+        System.out.println("Para usar el panel de administracion grafico, sigue estos pasos:");
+        System.out.println("\n1. Descargar JavaFX:");
+        System.out.println("   - Ve a: https://gluonhq.com/products/javafx/");
+        System.out.println("   - Descarga JavaFX 17 o superior");
+        System.out.println("\n2. Configurar en IntelliJ:");
+        System.out.println("   - File -> Project Structure -> Libraries");
+        System.out.println("   - Add (+) -> Java -> Selecciona la carpeta 'lib' de JavaFX");
+        System.out.println("   - Apply -> OK");
+        System.out.println("\n3. Configurar VM Options:");
+        System.out.println("   - Run -> Edit Configurations");
+        System.out.println("   - En 'VM options' agrega:");
+        System.out.println("   --module-path=\"RUTA_A_JAVAFX/lib\" --add-modules javafx.controls,javafx.fxml");
+        System.out.println("\n4. Alternativa - Usar opcion 1 para GUI normal");
+        System.out.println("   El sistema principal funciona con JavaFX ya configurado");
+        
+        System.out.println("\nPresiona Enter para continuar...");
+        try {
+            System.in.read();
+        } catch (Exception e) {
+            // Ignorar
+        }
+    }
+    
+    private static void mostrarInstruccionesJavaFXAvanzadas() {
+        System.out.println("\n=== SOLUCION PARA ERRORES DE MODULOS JAVAFX ===");
+        System.out.println("El error indica problemas con la configuracion de modulos de JavaFX.");
+        System.out.println("\nSOLUCION - Configura las VM Options correctas:");
+        System.out.println("\n1. Ve a: Run -> Edit Configurations");
+        System.out.println("2. En 'VM options' usa EXACTAMENTE esto:");
+        System.out.println("\n--module-path=\"C:\\javafx-17\\lib\" \\");
+        System.out.println("--add-modules javafx.controls,javafx.fxml,javafx.base,javafx.graphics \\");
+        System.out.println("--add-exports javafx.base/com.sun.javafx.logging=ALL-UNNAMED \\");
+        System.out.println("--add-exports javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED");
+        System.out.println("\n(Cambia la ruta C:\\javafx-17\\lib por tu ruta real de JavaFX)");
+        System.out.println("\n3. ALTERNATIVA MAS SIMPLE:");
+        System.out.println("   Agrega esta linea completa a VM options:");
+        System.out.println("\n--module-path=\"C:\\javafx-17\\lib\" --add-modules ALL-MODULE-PATH --add-exports javafx.base/com.sun.javafx.logging=ALL-UNNAMED");
+        System.out.println("\n4. Si el problema persiste:");
+        System.out.println("   - Verifica que JavaFX este en Project Structure -> Libraries");
+        System.out.println("   - Usa JavaFX 17 LTS (mas estable)");
+        System.out.println("   - Reinicia IntelliJ despues de los cambios");
+        
+        System.out.println("\nTambien puedes usar las opciones 2-4 del menu para crear objetos via consola");
+        System.out.println("\nPresiona Enter para continuar...");
+        try {
+            System.in.read();
+        } catch (Exception e) {
+            // Ignorar
+        }
+    }
+    
+    private static void mostrarDesafiosSinAsignar() {
+        System.out.println("\n=== DESAFIOS SIN ASIGNAR ===");
+        
+        if (desafiosSinAsignar.isEmpty()) {
+            System.out.println("   (No hay desafíos sin asignar)");
+            System.out.println("   Crea desafíos usando las interfaces (GUI) para que aparezcan aquí.");
+            return;
+        }
+        
+        System.out.println("Desafíos disponibles para asignar:");
+        for (int i = 0; i < desafiosSinAsignar.size(); i++) {
+            Desafio desafio = desafiosSinAsignar.get(i);
+            String tipo = desafio instanceof DesafioSemanal ? "Semanal" : "Mensual";
+            
+            System.out.println((i + 1) + ". " + desafio.getNombre() + " (" + tipo + ")");
+            System.out.println("   " + desafio.getDescripcion());
+            System.out.println("   Logros asociados: " + desafio.getLogrosDisponibles().size());
+            System.out.println();
+        }
+    }
+    
+    private static void asignarDesafioConsola() {
+        if (desafiosSinAsignar.isEmpty()) {
+            System.out.println("\n>>> No hay desafíos sin asignar disponibles.");
+            System.out.println(">>> Crea desafíos usando las interfaces (GUI) primero.");
+            return;
+        }
+        
+        if (estudiantes.isEmpty()) {
+            System.out.println("\n>>> No hay estudiantes registrados.");
+            return;
+        }
+        
+        System.out.println("\n=== ASIGNAR DESAFIO A ESTUDIANTE ===");
+        
+        // Mostrar desafíos disponibles
+        System.out.println("Desafíos disponibles:");
+        for (int i = 0; i < desafiosSinAsignar.size(); i++) {
+            Desafio desafio = desafiosSinAsignar.get(i);
+            String tipo = desafio instanceof DesafioSemanal ? "Semanal" : "Mensual";
+            System.out.println((i + 1) + ". " + desafio.getNombre() + " (" + tipo + ")");
+        }
+        
+        System.out.print(">> Selecciona desafío (1-" + desafiosSinAsignar.size() + "): ");
+        int indiceDesafio = obtenerOpcion() - 1;
+        
+        if (indiceDesafio < 0 || indiceDesafio >= desafiosSinAsignar.size()) {
+            System.out.println(">>> Selección inválida.");
+            return;
+        }
+        
+        Desafio desafioSeleccionado = desafiosSinAsignar.get(indiceDesafio);
+        
+        // Mostrar estudiantes disponibles
+        System.out.println("\nEstudiantes disponibles:");
+        for (int i = 0; i < estudiantes.size(); i++) {
+            Estudiante estudiante = estudiantes.get(i);
+            System.out.println((i + 1) + ". " + estudiante.getNombre() + " (ID: " + estudiante.getId() + ")");
+        }
+        
+        System.out.print(">> Selecciona estudiante (1-" + estudiantes.size() + "): ");
+        int indiceEstudiante = obtenerOpcion() - 1;
+        
+        if (indiceEstudiante < 0 || indiceEstudiante >= estudiantes.size()) {
+            System.out.println(">>> Selección inválida.");
+            return;
+        }
+        
+        Estudiante estudianteSeleccionado = estudiantes.get(indiceEstudiante);
+        
+        // Asignar el desafío
+        boolean asignado = asignarDesafioAEstudiante(desafioSeleccionado, estudianteSeleccionado);
+        
+        if (asignado) {
+            String tipo = desafioSeleccionado instanceof DesafioSemanal ? "semanal" : "mensual";
+            System.out.println(">>> ¡Desafío " + tipo + " asignado exitosamente!");
+            System.out.println(">>> " + estudianteSeleccionado.getNombre() + " ahora tiene el desafío: " + 
+                             desafioSeleccionado.getNombre());
+        } else {
+            System.out.println(">>> Error al asignar el desafío.");
+        }
+    }
+    
+    private static void mostrarAdministracionConsola() {
+        System.out.println("\n=== ADMINISTRACION - MODO CONSOLA ===");
+        System.out.println("El panel grafico no esta disponible. Opciones disponibles:");
+        System.out.println("- Usa las opciones del menu principal (2-4) para crear objetos");
+        System.out.println("- Configura JavaFX para acceder al panel grafico completo");
+        System.out.println("\nEsta funcionalidad permite:");
+        System.out.println("• Crear desafios semanales y mensuales con interfaz grafica");
+        System.out.println("• Crear logros personalizados con vista previa");
+        System.out.println("• Asignar desafios a estudiantes especificos");
+        System.out.println("• Ver estadisticas del sistema en tiempo real");
+        System.out.println("\nPresiona Enter para continuar...");
+        try {
+            System.in.read();
+        } catch (Exception e) {
+            // Ignorar
         }
     }
 }

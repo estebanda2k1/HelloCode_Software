@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane fx:id="adminMainPane" prefHeight="852.0" prefWidth="400.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Gamificacion_Modulo.GUI.admin.AdminMainController">
+   <top>
+      <!-- Header -->
+      <VBox styleClass="header" spacing="10">
+         <padding>
+            <Insets top="20" left="20" right="20" bottom="15"/>
+         </padding>
+         <HBox alignment="CENTER_LEFT" spacing="10">
+            <Button fx:id="btnVolver" text="← Volver" onAction="#onVolverClicked" styleClass="secondary-button"/>
+            <Label text="Panel de Administración" styleClass="title"/>
+         </HBox>
+         <Label text="Crear y gestionar objetos del sistema" styleClass="subtitle"/>
+      </VBox>
+   </top>
+
+   <center>
+      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED">
+         <VBox spacing="15" alignment="TOP_CENTER">
+            <padding>
+               <Insets top="20" left="20" right="20" bottom="20"/>
+            </padding>
+            
+            <!-- Sección Desafíos -->
+            <VBox spacing="10" styleClass="card">
+               <padding>
+                  <Insets top="15" left="15" right="15" bottom="15"/>
+               </padding>
+               <Label text="🎯 Gestión de Desafíos" styleClass="section-title"/>
+               <Label text="Crear nuevos desafíos para estudiantes" styleClass="section-subtitle"/>
+               
+               <HBox spacing="10" alignment="CENTER">
+                  <Button fx:id="btnCrearDesafioSemanal" text="Crear Desafío Semanal" onAction="#onCrearDesafioSemanalClicked" 
+                          styleClass="primary-button" prefWidth="160"/>
+                  <Button fx:id="btnCrearDesafioMensual" text="Crear Desafío Mensual" onAction="#onCrearDesafioMensualClicked" 
+                          styleClass="primary-button" prefWidth="160"/>
+               </HBox>
+            </VBox>
+            
+            <!-- Sección Logros -->
+            <VBox spacing="10" styleClass="card">
+               <padding>
+                  <Insets top="15" left="15" right="15" bottom="15"/>
+               </padding>
+               <Label text="🏆 Gestión de Logros" styleClass="section-title"/>
+               <Label text="Crear logros personalizados para el sistema" styleClass="section-subtitle"/>
+               
+               <Button fx:id="btnCrearLogro" text="Crear Logro Personalizado" onAction="#onCrearLogroClicked" 
+                       styleClass="primary-button" prefWidth="200"/>
+            </VBox>
+            
+            <!-- Sección Progreso -->
+            <VBox spacing="10" styleClass="card">
+               <padding>
+                  <Insets top="15" left="15" right="15" bottom="15"/>
+               </padding>
+               <Label text="📊 Gestión de Progreso" styleClass="section-title"/>
+               <Label text="Asignar desafíos a estudiantes específicos" styleClass="section-subtitle"/>
+               
+               <Button fx:id="btnAsignarDesafio" text="Asignar Desafío a Estudiante" onAction="#onAsignarDesafioClicked" 
+                       styleClass="primary-button" prefWidth="200"/>
+            </VBox>
+            
+            <!-- Sección Estadísticas -->
+            <VBox spacing="10" styleClass="card">
+               <padding>
+                  <Insets top="15" left="15" right="15" bottom="15"/>
+               </padding>
+               <Label text="📈 Información del Sistema" styleClass="section-title"/>
+               <Label text="Ver estadísticas y estado actual" styleClass="section-subtitle"/>
+               
+               <VBox spacing="5">
+                  <Label fx:id="lblEstadisticas" text="Cargando estadísticas..." styleClass="info-text"/>
+                  <Button fx:id="btnActualizarStats" text="Actualizar Estadísticas" onAction="#onActualizarStatsClicked" 
+                          styleClass="secondary-button" prefWidth="150"/>
+               </VBox>
+            </VBox>
+         </VBox>
+      </ScrollPane>
+   </center>
+</BorderPane> 

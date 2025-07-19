@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" 
+            prefHeight="852.0" prefWidth="400.0" stylesheets="@../styles.css"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Gamificacion_Modulo.GUI.admin.AsignarDesafioController">
+   <VBox fx:id="mainVBox" spacing="15">
+   
+   <padding>
+      <Insets top="20" left="20" right="20" bottom="20"/>
+   </padding>
+   
+   <!-- Header -->
+   <VBox spacing="5" styleClass="header">
+      <Label text="📊 Asignar Desafío a Estudiante" styleClass="title"/>
+      <Label text="Asigna desafíos ya creados a estudiantes específicos" styleClass="subtitle"/>
+   </VBox>
+   
+   <!-- Selección de Estudiante -->
+   <VBox spacing="8" styleClass="card">
+      <padding>
+         <Insets top="15" left="15" right="15" bottom="15"/>
+      </padding>
+      <Label text="👤 Seleccionar Estudiante" styleClass="section-title"/>
+      <ComboBox fx:id="cbEstudiantes" promptText="Selecciona un estudiante..." prefWidth="400"/>
+      <Label fx:id="lblInfoEstudiante" text="" styleClass="info-text"/>
+   </VBox>
+   
+   <!-- Desafíos Disponibles para Asignar -->
+   <VBox spacing="8" styleClass="card">
+      <padding>
+         <Insets top="15" left="15" right="15" bottom="15"/>
+      </padding>
+      <Label text="🎯 Desafíos Disponibles" styleClass="section-title"/>
+      <Label text="Selecciona un desafío ya creado para asignar al estudiante" styleClass="field-label"/>
+      
+      <ScrollPane prefHeight="150" fitToWidth="true" hbarPolicy="NEVER">
+         <VBox fx:id="vboxDesafiosDisponibles" spacing="8">
+            <Label text="Cargando desafíos disponibles..." styleClass="info-text"/>
+         </VBox>
+      </ScrollPane>
+      
+      <Label fx:id="lblDesafioSeleccionado" text="Ningún desafío seleccionado" styleClass="info-text"/>
+   </VBox>
+   
+   <!-- Resumen de Desafíos Activos del Estudiante -->
+   <VBox spacing="8" styleClass="card">
+      <padding>
+         <Insets top="15" left="15" right="15" bottom="15"/>
+      </padding>
+      <Label text="📋 Desafíos Activos del Estudiante" styleClass="section-title"/>
+      <ScrollPane prefHeight="100" fitToWidth="true" hbarPolicy="NEVER">
+         <VBox fx:id="vboxDesafiosActivos" spacing="3">
+            <Label text="Selecciona un estudiante para ver sus desafíos activos" styleClass="info-text"/>
+         </VBox>
+      </ScrollPane>
+   </VBox>
+   
+   <!-- Botones de Acción -->
+   <HBox spacing="10" alignment="CENTER">
+      <Button fx:id="btnCancelar" text="Cancelar" onAction="#onCancelarClicked" 
+              styleClass="secondary-button" prefWidth="120"/>
+      <Button fx:id="btnAsignar" text="Asignar Desafío" onAction="#onAsignarClicked" 
+              styleClass="primary-button" prefWidth="120" disable="true"/>
+   </HBox>
+   </VBox>
+</ScrollPane> 

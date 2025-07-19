@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<ScrollPane fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="AS_NEEDED" 
+            prefHeight="852.0" prefWidth="400.0" stylesheets="@../styles.css"
+            xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Gamificacion_Modulo.GUI.admin.CrearDesafioSemanalController">
+   <VBox fx:id="mainVBox" spacing="12">
+      <padding>
+         <Insets top="15" left="15" right="15" bottom="15"/>
+      </padding>
+   
+   <!-- Header -->
+   <VBox spacing="5" styleClass="header">
+      <Label text="🎯 Crear Desafío Semanal" styleClass="title"/>
+      <Label text="Define un nuevo desafío semanal para el sistema" styleClass="subtitle"/>
+   </VBox>
+   
+      <!-- Configuración del Desafío -->
+      <VBox spacing="6" styleClass="card">
+         <padding>
+            <Insets top="12" left="12" right="12" bottom="12"/>
+         </padding>
+         <Label text="⚙️ Configuración del Desafío" styleClass="section-title"/>
+         
+         <VBox spacing="4">
+            <Label text="Meta de actividades semanales:" styleClass="field-label"/>
+            <HBox spacing="8" alignment="CENTER_LEFT">
+               <Slider fx:id="sliderMeta" min="1" max="20" value="5" majorTickUnit="5" minorTickCount="4" 
+                       showTickLabels="true" showTickMarks="true" prefWidth="220"/>
+               <Label fx:id="lblMeta" text="5" styleClass="field-value"/>
+            </HBox>
+            <Label text="Rango: 1-20 actividades por semana" styleClass="help-text"/>
+         </VBox>
+      </VBox>
+      
+      <!-- Selección de Logros -->
+      <VBox spacing="6" styleClass="card">
+         <padding>
+            <Insets top="12" left="12" right="12" bottom="12"/>
+         </padding>
+         <Label text="🏆 Logros Asociados" styleClass="section-title"/>
+         <Label text="Selecciona los logros que se pueden obtener al completar este desafío" styleClass="field-label"/>
+         
+         <ScrollPane prefHeight="100" fitToWidth="true" hbarPolicy="NEVER">
+            <VBox fx:id="vboxLogros" spacing="3"/>
+         </ScrollPane>
+         
+         <Label fx:id="lblLogrosSeleccionados" text="0 logros seleccionados" styleClass="info-text"/>
+      </VBox>
+      
+      <!-- Vista Previa -->
+      <VBox spacing="6" styleClass="card">
+         <padding>
+            <Insets top="12" left="12" right="12" bottom="12"/>
+         </padding>
+         <Label text="👁️ Vista Previa del Desafío" styleClass="section-title"/>
+         <VBox fx:id="vboxVistaPrevia" spacing="4" style="-fx-background-color: #f8f9fa; -fx-padding: 8; -fx-border-radius: 5;">
+            <Label text="Configura los parámetros para ver la vista previa" styleClass="info-text"/>
+         </VBox>
+      </VBox>
+   
+      <!-- Espacio adicional para el botón -->
+      <VBox spacing="15" alignment="CENTER">
+         <HBox spacing="15" alignment="CENTER">
+            <Button fx:id="btnCancelar" text="Cancelar" onAction="#onCancelarClicked" 
+                    styleClass="secondary-button" prefWidth="140" prefHeight="35"/>
+            <Button fx:id="btnCrear" text="Crear Desafío" onAction="#onCrearClicked" 
+                    styleClass="primary-button" prefWidth="140" prefHeight="35"/>
+         </HBox>
+      </VBox>
+   </VBox>
+</ScrollPane> 
