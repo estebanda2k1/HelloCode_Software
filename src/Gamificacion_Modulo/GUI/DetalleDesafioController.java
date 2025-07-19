@@ -2,152 +2,167 @@ package Gamificacion_Modulo.GUI;
 
 import Gamificacion_Modulo.*;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.event.ActionEvent;
-import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import java.util.List;
 
 public class DetalleDesafioController {
-    
+
     @FXML
-    private Label lblTituloDesafio;
-    
+    private Label lblTitulo;
+
     @FXML
-    private Label lblDescripcion;
-    
+    private ImageView imgEllipse;
+
     @FXML
-    private Label lblTipoDesafio;
-    
+    private Label lblSemanal1, lblSemanal2, lblSemanal3;
+
     @FXML
-    private Label lblPuntosRecompensa;
-    
+    private Label lblProgresoSemanal1, lblProgresoSemanal2, lblProgresoSemanal3;
+
     @FXML
-    private Label lblProgreso;
-    
+    private Label lblMensual1, lblMensual2, lblMensual3;
+
     @FXML
-    private Label lblTiempoRestante;
-    
+    private Label lblProgresoMensual1, lblProgresoMensual2, lblProgresoMensual3;
+
     @FXML
-    private Label lblDificultad;
-    
-    @FXML
-    private ProgressBar progressDesafio;
-    
-    @FXML
-    private ImageView imgDesafio;
-    
-    @FXML
-    private Button btnComenzar;
-    
-    @FXML
-    private Button btnContinuar;
-    
-    @FXML
-    private Button btnVolver;
-    
-    @FXML
-    private VBox vboxRequisitos;
-    
-    @FXML
-    private VBox vboxRecompensas;
-    
-    private Desafio desafioActual;
-    
+    private ImageView iconHome, iconProfile, iconRanking;
+
+    private ProgresoEstudiante progresoActual;
+
     @FXML
     public void initialize() {
-        // Cargar un desafío de ejemplo
-        cargarDesafioEjemplo();
+        cargarDatosDesafios();
     }
-    
-    private void cargarDesafioEjemplo() {
-        // Simular datos de un desafío
-        lblTituloDesafio.setText("Estructuras de Datos");
-        lblDescripcion.setText("Completa los ejercicios sobre arrays, listas y estructuras de datos básicas.");
-        lblTipoDesafio.setText("Semanal");
-        lblPuntosRecompensa.setText("250");
-        lblProgreso.setText("3/5");
-        lblTiempoRestante.setText("4 días");
-        lblDificultad.setText("Intermedio");
-        
-        // Configurar barra de progreso
-        progressDesafio.setProgress(0.6); // 60% completado
-        
-        // Configurar botones según el estado
-        btnComenzar.setVisible(false);
-        btnContinuar.setVisible(true);
-        
-        System.out.println(">>> Detalle de desafío cargado");
-        System.out.println("- Título: " + lblTituloDesafio.getText());
-        System.out.println("- Progreso: " + lblProgreso.getText());
-        System.out.println("- Tiempo restante: " + lblTiempoRestante.getText());
-    }
-    
-    public void setDesafio(Desafio desafio) {
-        this.desafioActual = desafio;
-        
-        lblTituloDesafio.setText(desafio.getNombre());
-        lblDescripcion.setText(desafio.getDescripcion());
-        lblPuntosRecompensa.setText("200"); // Puntos base por defecto
-        
-        if (desafio instanceof DesafioSemanal) {
-            lblTipoDesafio.setText("Semanal");
-            lblTiempoRestante.setText("7 días");
-        } else if (desafio instanceof DesafioMensual) {
-            lblTipoDesafio.setText("Mensual");
-            lblTiempoRestante.setText("30 días");
-        }
-        
-        // Configurar estado del desafío
-        if (desafio.estaCompletado()) {
-            btnComenzar.setVisible(false);
-            btnContinuar.setVisible(false);
-            progressDesafio.setProgress(1.0);
-            lblProgreso.setText("Completado");
-        } else {
-            btnComenzar.setVisible(true);
-            btnContinuar.setVisible(false);
-            progressDesafio.setProgress(0.0);
-            lblProgreso.setText("0/" + desafio.getLogrosDisponibles().size());
-        }
-    }
-    
-    @FXML
-    private void onComenzarClicked(ActionEvent event) {
-        System.out.println(">>> Comenzando desafío: " + lblTituloDesafio.getText());
-        
-        // Cambiar estado de botones
-        btnComenzar.setVisible(false);
-        btnContinuar.setVisible(true);
-        
-        // Actualizar progreso
-        progressDesafio.setProgress(0.1);
-        lblProgreso.setText("1/" + (desafioActual != null ? desafioActual.getLogrosDisponibles().size() : "5"));
-    }
-    
-    @FXML
-    private void onContinuarClicked(ActionEvent event) {
-        System.out.println(">>> Continuando desafío: " + lblTituloDesafio.getText());
-        
-        // Simular progreso
-        double progresoActual = progressDesafio.getProgress();
-        if (progresoActual < 1.0) {
-            progressDesafio.setProgress(progresoActual + 0.2);
-            int completados = (int) (progressDesafio.getProgress() * 5);
-            lblProgreso.setText(completados + "/5");
-            
-            if (progressDesafio.getProgress() >= 1.0) {
-                lblProgreso.setText("Completado");
-                btnContinuar.setVisible(false);
-                System.out.println(">>> ¡Desafío completado!");
+
+    private void cargarDatosDesafios() {
+        List<ProgresoEstudiante> progresos = Main.getProgresos();
+
+        if (!progresos.isEmpty()) {
+            progresoActual = progresos.size() > 1 ? progresos.get(1) : progresos.get(0);
+
+            // Cargar desafíos semanales
+            List<Desafio> desafiosActivos = progresoActual.getDesafiosActivos();
+            int semanalCount = 0;
+            int mensualCount = 0;
+
+            for (Desafio desafio : desafiosActivos) {
+                if (desafio instanceof DesafioSemanal && semanalCount < 3) {
+                    DesafioSemanal ds = (DesafioSemanal) desafio;
+                    String progreso = ds.getActividadesCompletadas() + "/" + ds.getMetaSemanal();
+                    switch (semanalCount) {
+                        case 0:
+                            lblSemanal1.setText(desafio.getNombre());
+                            lblProgresoSemanal1.setText(progreso);
+                            break;
+                        case 1:
+                            lblSemanal2.setText(desafio.getNombre());
+                            lblProgresoSemanal2.setText(progreso);
+                            break;
+                        case 2:
+                            lblSemanal3.setText(desafio.getNombre());
+                            lblProgresoSemanal3.setText(progreso);
+                            break;
+                    }
+                    semanalCount++;
+                } else if (desafio instanceof DesafioMensual && mensualCount < 3) {
+                    DesafioMensual dm = (DesafioMensual) desafio;
+                    String progreso = dm.getActividadesCompletadas() + "/" + dm.getObjetivoMensual();
+                    switch (mensualCount) {
+                        case 0:
+                            lblMensual1.setText(desafio.getNombre());
+                            lblProgresoMensual1.setText(progreso);
+                            break;
+                        case 1:
+                            lblMensual2.setText(desafio.getNombre());
+                            lblProgresoMensual2.setText(progreso);
+                            break;
+                        case 2:
+                            lblMensual3.setText(desafio.getNombre());
+                            lblProgresoMensual3.setText(progreso);
+                            break;
+                    }
+                    mensualCount++;
+                }
             }
+
+            System.out.println(">>> Datos de desafíos cargados para: " + progresoActual.getEstudiante().getNombre());
+        } else {
+            // Datos por defecto
+            lblSemanal1.setText("Completa 1 actividad");
+            lblProgresoSemanal1.setText("0/1");
+            lblSemanal2.setText("Completa 2 actividades");
+            lblProgresoSemanal2.setText("1/2");
+            lblSemanal3.setText("Completa 3 actividades");
+            lblProgresoSemanal3.setText("0/3");
+
+            lblMensual1.setText("Completa 1 actividad");
+            lblProgresoMensual1.setText("1/2");
+            lblMensual2.setText("Completa 2 actividades");
+            lblProgresoMensual2.setText("1/2");
+            lblMensual3.setText("Completa 3 actividades");
+            lblProgresoMensual3.setText("3/3");
         }
     }
-    
+
     @FXML
-    private void onVolverClicked(ActionEvent event) {
-        System.out.println(">>> Volviendo a la lista de desafíos");
-        // Aquí se implementaría la navegación de vuelta
+    private void onHomeClicked(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Gamificacion_Modulo/GUI/MainGamificacion.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 393, 852);
+            Stage stage = (Stage) iconHome.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Sistema de Gamificación - HelloCode");
+            stage.show();
+            System.out.println(">>> Navegando a Home desde Desafíos");
+        } catch (Exception e) {
+            System.err.println("Error al navegar a Home: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void onProfileClicked(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Gamificacion_Modulo/GUI/PerfilUsuario.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 393, 852);
+            Stage stage = (Stage) iconProfile.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Perfil - Sistema de Gamificación");
+            stage.show();
+            System.out.println(">>> Navegando a Perfil desde Desafíos");
+        } catch (Exception e) {
+            System.err.println("Error al navegar a Perfil: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void onRankingClicked(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/Gamificacion_Modulo/GUI/Ranking.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root, 393, 852);
+            Stage stage = (Stage) iconRanking.getScene().getWindow();
+            stage.setScene(scene);
+            stage.setTitle("Ranking - Sistema de Gamificación");
+            stage.show();
+            System.out.println(">>> Navegando a Ranking desde Desafíos");
+        } catch (Exception e) {
+            System.err.println("Error al navegar a Ranking: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void actualizarDatos() {
+        cargarDatosDesafios();
     }
 }

@@ -20,7 +20,7 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         // Cargar la interfaz FXML principal
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("GUI/MainGamificacion.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("GUI/fxml/Desafios.fxml"));
             Parent root = loader.load();
             
             Scene scene = new Scene(root);
