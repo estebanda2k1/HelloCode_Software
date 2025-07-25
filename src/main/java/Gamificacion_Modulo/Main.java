@@ -18,7 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class    Main extends Application {
     private static final List<Usuario> usuarios = new ArrayList<>();
     private static final List<Logro> logrosDisponibles = new ArrayList<>();
     private static final List<Desafio> desafiosDisponibles = new ArrayList<>();
