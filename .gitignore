@@ -1,0 +1,5 @@
+ .idea/
+ HelloCode_Software.iml
+ src/main/resources/Modulo_Usuario/Usuarios/
+ target/
+ .gitignore

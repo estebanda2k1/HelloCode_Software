@@ -1,8 +1,6 @@
 package Gamificacion_Modulo;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -170,7 +168,7 @@ public class    Main extends Application {
         Button button = new Button("Sistema de Gamificación");
         button.setOnAction(actionEvent -> {
             System.out.println("Interfaz gráfica no disponible. Usa la consola.");
-            mostrarMenuConsola();
+//            mostrarMenuConsola();
         });
         
         layout.getChildren().add(button);
@@ -180,11 +178,11 @@ public class    Main extends Application {
         stage.show();
     }
     
-    private void mostrarMenuConsola() {
-        System.out.println("\n=== MODO CONSOLA ACTIVADO ===");
-        System.out.println("La interfaz gráfica no está disponible.");
-        System.out.println("Cierra esta ventana y ejecuta el programa desde la consola.");
-    }
+//    private void mostrarMenuConsola() {
+//        System.out.println("\n=== MODO CONSOLA ACTIVADO ===");
+//        System.out.println("La interfaz gráfica no está disponible.");
+//        System.out.println("Cierra esta ventana y ejecuta el programa desde la consola.");
+//    }
     
     public static void mostrarGUI() {
         System.out.println(">>> Iniciando interfaz gráfica...");
@@ -221,7 +219,7 @@ public class    Main extends Application {
         return usuarios;
     }
     
-        public static List<Logro> getLogrosDisponibles() {
+    public static List<Logro> getLogrosDisponibles() {
         return logrosDisponibles;
     }
 
@@ -246,18 +244,18 @@ public class    Main extends Application {
         // Inicializar datos del sistema
         inicializarDatos();
         
-        System.out.println("*** BIENVENIDO AL SISTEMA DE GAMIFICACION ***");
-        System.out.println("===============================================");
-        System.out.println("🚀 Iniciando modo DUAL: Interfaz Gráfica + Consola");
-        System.out.println("📱 La interfaz gráfica se abrirá automáticamente");
-        System.out.println("💻 La consola estará disponible para interactuar");
-        System.out.println("🔄 Los cambios en consola se reflejarán en la interfaz");
-        System.out.println("===============================================\n");
+//        System.out.println("*** BIENVENIDO AL SISTEMA DE GAMIFICACION ***");
+//        System.out.println("===============================================");
+//        System.out.println("🚀 Iniciando modo DUAL: Interfaz Gráfica + Consola");
+//        System.out.println("📱 La interfaz gráfica se abrirá automáticamente");
+//        System.out.println("💻 La consola estará disponible para interactuar");
+//        System.out.println("🔄 Los cambios en consola se reflejarán en la interfaz");
+//        System.out.println("===============================================\n");
         
         // Iniciar la interfaz gráfica en un hilo separado
         Thread guiThread = new Thread(() -> {
             try {
-                System.out.println(">>> Iniciando interfaz gráfica...");
+//                System.out.println(">>> Iniciando interfaz gráfica...");
                 launch();
             } catch (Exception e) {
                 System.err.println("Error al iniciar interfaz gráfica: " + e.getMessage());
@@ -277,7 +275,7 @@ public class    Main extends Application {
         // Ejecutar la consola en el hilo principal
         System.out.println(">>> Interfaz de consola lista para usar");
         System.out.println(">>> Utiliza la consola para simular actividades y ver cambios en tiempo real en la GUI\n");
-        ejecutarModoConsola();
+//        ejecutarModoConsola();
     }
     
     private static void inicializarDatos() {
@@ -329,10 +327,9 @@ public class    Main extends Application {
     // Método para cargar usuarios desde el archivo del módulo de usuarios
     private static void cargarUsuariosDesdeArchivo() {
         try {
-            InputStream inputStream = Main.class.getResourceAsStream("/Modulo_Usuario/Usuarios/usuarios.txt");
-            if (inputStream == null) {
-                inputStream = Main.class.getClassLoader().getResourceAsStream("Modulo_Usuario/Usuarios/usuarios.txt");
-            }
+            InputStream inputStream = new FileInputStream(new File("src/main/java/Modulo_Usuario/Usuarios/usuarios.txt"));
+//            InputStream inputStream = Main.class.getResourceAsStream("/Modulo_Usuario/Usuarios/usuarios.txt");
+
             
             if (inputStream == null) {
                 System.err.println(">>> No se pudo encontrar el archivo de usuarios. Creando usuarios por defecto.");
@@ -348,10 +345,10 @@ public class    Main extends Application {
                         Usuario usuario = Usuario.fromString(linea);
                         if (usuario != null) {
                             // Completar información del usuario con datos por defecto si no tiene
-                            if (usuario.getNombre() == null || usuario.getNombre().isEmpty()) {
+                            if (usuario.getNombre() == null || usuario.getNombre().isEmpty() || usuario.getNombre().equals("null")) {
                                 usuario.setNombre("Usuario " + usuario.getUsername());
                             }
-                            if (usuario.getEmail() == null || usuario.getEmail().isEmpty()) {
+                            if (usuario.getEmail() == null || usuario.getEmail().isEmpty() || usuario.getNombre().equals("null")) {
                                 usuario.setEmail(usuario.getUsername() + "@email.com");
                             }
                             usuarios.add(usuario);
@@ -382,58 +379,58 @@ public class    Main extends Application {
         System.out.println(">>> Usuarios por defecto creados");
     }
     
-    private static void ejecutarModoConsola() {
-        scanner = new Scanner(System.in);
-        System.out.println("\n*** MODO CONSOLA ACTIVADO ***");
-        System.out.println("===============================================");
-
-        boolean continuar = true;
-        while (continuar) {
-            mostrarMenu();
-            int opcion = obtenerOpcion();
-
-            switch (opcion) {
-                case 1:
-                    mostrarUsuarios();
-                    break;
-                case 2:
-                    crearDesafioSemanal();
-                    break;
-                case 3:
-                    crearDesafioMensual();
-                    break;
-                case 4:
-                    crearLogroPersonalizado();
-                    break;
-                case 5:
-                    simularActividad();
-                    break;
-                case 6:
-                    mostrarProgreso();
-                    break;
-                case 7:
-                    mostrarRanking();
-                    break;
-                case 8:
-                    mostrarDesafiosActivos();
-                    break;
-                case 9:
-                    mostrarLogrosDisponibles();
-                    break;
-                case 10:
-                    visualizarEstadisticas();
-                    break;
-                case 0:
-                    continuar = false;
-                    System.out.println("Gracias por usar el sistema de gamificacion!");
-                    break;
-                default:
-                    System.out.println(">>> Opcion invalida. Intenta de nuevo.");
-            }
-        }
-
-        scanner.close();
-    }
+//    private static void ejecutarModoConsola() {
+//        scanner = new Scanner(System.in);
+//        System.out.println("\n*** MODO CONSOLA ACTIVADO ***");
+//        System.out.println("===============================================");
+//
+//        boolean continuar = true;
+//        while (continuar) {
+//            mostrarMenu();
+//            int opcion = obtenerOpcion();
+//
+//            switch (opcion) {
+//                case 1:
+//                    mostrarUsuarios();
+//                    break;
+//                case 2:
+//                    crearDesafioSemanal();
+//                    break;
+//                case 3:
+//                    crearDesafioMensual();
+//                    break;
+//                case 4:
+//                    crearLogroPersonalizado();
+//                    break;
+//                case 5:
+//                    simularActividad();
+//                    break;
+//                case 6:
+//                    mostrarProgreso();
+//                    break;
+//                case 7:
+//                    mostrarRanking();
+//                    break;
+//                case 8:
+//                    mostrarDesafiosActivos();
+//                    break;
+//                case 9:
+//                    mostrarLogrosDisponibles();
+//                    break;
+//                case 10:
+//                    visualizarEstadisticas();
+//                    break;
+//                case 0:
+//                    continuar = false;
+//                    System.out.println("Gracias por usar el sistema de gamificacion!");
+//                    break;
+//                default:
+//                    System.out.println(">>> Opcion invalida. Intenta de nuevo.");
+//            }
+//        }
+//
+//        scanner.close();
+//    }
 
     private static ProgresoEstudiante buscarProgresoPorUsername(String username) {
         for (ProgresoEstudiante p : progresos) {
@@ -453,21 +450,21 @@ public class    Main extends Application {
         return null;
     }
 
-    private static void mostrarMenu() {
-        System.out.println("\n===== MENU PRINCIPAL =====");
-        System.out.println("1. Ver usuarios");
-        System.out.println("2. Crear Desafio Semanal");
-        System.out.println("3. Crear Desafio Mensual");
-        System.out.println("4. Crear Logro Personalizado");
-        System.out.println("5. Simular Actividad");
-        System.out.println("6. Ver Mi Progreso");
-        System.out.println("7. Ver Ranking");
-        System.out.println("8. Ver Desafios Activos");
-        System.out.println("9. Ver Logros Disponibles");
-        System.out.println("10. Visualizar Estadísticas");
-        System.out.println("0. Salir");
-        System.out.print(">> Selecciona una opcion: ");
-    }
+//    private static void mostrarMenu() {
+//        System.out.println("\n===== MENU PRINCIPAL =====");
+//        System.out.println("1. Ver usuarios");
+//        System.out.println("2. Crear Desafio Semanal");
+//        System.out.println("3. Crear Desafio Mensual");
+//        System.out.println("4. Crear Logro Personalizado");
+//        System.out.println("5. Simular Actividad");
+//        System.out.println("6. Ver Mi Progreso");
+//        System.out.println("7. Ver Ranking");
+//        System.out.println("8. Ver Desafios Activos");
+//        System.out.println("9. Ver Logros Disponibles");
+//        System.out.println("10. Visualizar Estadísticas");
+//        System.out.println("0. Salir");
+//        System.out.print(">> Selecciona una opcion: ");
+//    }
 
     private static int obtenerOpcion() {
         try {

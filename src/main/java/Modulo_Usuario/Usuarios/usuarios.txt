@@ -2,3 +2,5 @@ admin;1234;null;null
 usuario1;abc;null;null
 erick;123456;erick;erick@gmail.com
 Pamela;123456;Pamela;erick1@gmail.com
+PP;123456;pp;Pp@gmail.com
+UsuarioAdministrador{idAdmin='ad', nombre=adminA', nivelAcceso=10, esSuperAdmin=true, permisos=0}
