@@ -7,8 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.stage.Stage;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 
 public class HomeController {
@@ -53,7 +53,7 @@ public class HomeController {
         try {
             // PASO 1: Inicializar el backend del módulo de gamificación
             System.out.println(">>> Navegando al módulo de gamificación...");
-            Gamificacion_Modulo.Main.inicializarDesdeModuloExterno();
+            Gamificacion_Modulo.clases.Main.inicializarDesdeModuloExterno();
 
             // PASO 2: Cargar la interfaz gráfica
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/Gamificacion_Modulo/fxml/PerfilUsuario.fxml"));
@@ -66,7 +66,7 @@ public class HomeController {
             stage.show();
 
             System.out.println(">>> Módulo de gamificación abierto con " +
-                    Gamificacion_Modulo.Main.getUsuarios().size() + " usuarios cargados");
+                    Gamificacion_Modulo.clases.Main.getUsuarios().size() + " usuarios cargados");
 
             // Cerrar la pantalla actual
             Stage thisStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();

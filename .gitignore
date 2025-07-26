@@ -3,3 +3,4 @@
  src/main/resources/Modulo_Usuario/Usuarios/
  target/
  .gitignore
+ .class
