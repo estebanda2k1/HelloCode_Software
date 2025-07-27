@@ -68,6 +68,9 @@ public class PerfilUsuarioController {
     
     private int estudianteActualIndex = 0;
 
+
+    //TODO: BORRAR LOS PRINTLN DE DEBUG CUANDO SE HAYA TERMINADO EL DESARROLLO, TAMBIEN CORREGIR EL MAIN. PARA METODOS GLOBALES
+
     // Botón 1 (izquierda) - navegar a Desafíos
     @FXML
     private void navButton1() {
@@ -137,7 +140,9 @@ public class PerfilUsuarioController {
         }
     }
 
-    // Método para mostrar progreso de desafíos
+
+    // TODO: Corregir el Main.getprogresos() para que no use el Main directamente, sino que use un método de acceso
+        // Método para mostrar progreso de desafíos
     @FXML
     private void verProgresoDesafios() {
         System.out.println(">>> Mostrando progreso de desafíos");
@@ -228,7 +233,8 @@ public class PerfilUsuarioController {
                         mensaje.append("      ").append(logro.getDescripcion()).append("\n\n");
                     }
                 }
-                
+                //TODO: Corregir el getLogrosDisponibles() para que no use el Main directamente, sino que use un método de acceso
+
                 mensaje.append("🏅 LOGROS DISPONIBLES (").append(Main.getLogrosDisponibles().size()).append("):\n");
                 for (Logro logro : Main.getLogrosDisponibles()) {
                     boolean obtenido = progreso.getLogros().contains(logro);
@@ -329,6 +335,7 @@ public class PerfilUsuarioController {
     // Método para cargar usuarios en el ComboBox
     private void cargarEstudiantesEnComboBox() {
         try {
+            //TODO: Corregir el Main.getUsuarios() para que no use el Main directamente, sino que use un método de acceso
             List<Usuario> usuarios = Main.getUsuarios();
             System.out.println(">>> Cargando usuarios en ComboBox: " + usuarios.size() + " usuarios encontrados");
             

@@ -17,6 +17,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+
+    //TODO: Cambiar todos estos datos a clases que controlen y llamen
     private static final List<Usuario> usuarios = new ArrayList<>();
     private static final List<Logro> logrosDisponibles = new ArrayList<>();
     private static final List<Desafio> desafiosDisponibles = new ArrayList<>();
@@ -73,6 +75,7 @@ public class Main extends Application {
         }
     }
 
+    //TODO: Este metodo cambiar por el metodo global cambiar ventana
     // Método estático para cambiar escenas desde los controladores
     public static void cambiarEscena(String fxmlPath) {
         try {
@@ -109,11 +112,15 @@ public class Main extends Application {
         }
     }
 
+
+    //TODO: METODO QUE NO SE DONDE SE USA XD
+
     // Método para obtener referencia del Stage principal
     public static Stage getPrimaryStage() {
         return primaryStage;
     }
 
+    //TODO: METODOS REGISTRAR QUE SE PUEDE BORRAR PORQUE SOLO FUNCIONA EN CONSOLA
     // Métodos para gestión de controladores activos
     public static void registrarPerfilController(Object controller) {
         currentPerfilController = controller;
@@ -124,7 +131,7 @@ public class Main extends Application {
         currentRankingController = controller;
         System.out.println(">>> Controlador de Ranking registrado para notificaciones");
     }
-
+    //TODO: LO MISMO DE REGISTRAR, SOLO SALTA EN CONSOLA
     public static void desregistrarPerfilController() {
         currentPerfilController = null;
         System.out.println(">>> Controlador de Perfil desregistrado");
@@ -135,6 +142,8 @@ public class Main extends Application {
         System.out.println(">>> Controlador de Ranking desregistrado");
     }
 
+
+    //TODO: METODO QUE SE PUEDE BORRAR
     // Método para notificar actualizaciones a las interfaces
     public static void notificarActualizacionInterface() {
         System.out.println(">>> Notificando actualización a interfaces activas...");
@@ -162,6 +171,9 @@ public class Main extends Application {
         }
     }
 
+
+    //TODO: METODO QUE SE PUEDE BORRAR, SOLO SE MUESTRA COMO MENSAJE DE ADVERTENCIA DE NO CARGAR LA GUI
+
     private void mostrarVentanaSimple(Stage stage) {
         StackPane layout = new StackPane();
         Button button = new Button("Sistema de Gamificación");
@@ -178,11 +190,12 @@ public class Main extends Application {
     }
 
 
-
+    //TODO: METODO SIN USAR
     public static void mostrarGUI() {
         System.out.println(">>> Iniciando interfaz gráfica...");
         launch();
     }
+    //TODO: METODO SOLO PARA CONSOLA
 
     // Método para inicializar datos cuando se navega desde otro módulo
     public static void inicializarDesdeModuloExterno() {
@@ -208,6 +221,9 @@ public class Main extends Application {
             System.out.println("   - " + p.getUsuario().getNombre() + ": " + p.getPuntosTotal() + " puntos");
         }
     }
+
+
+    //TODO: METODOS QUE SI USAN OTRAS CLASES Y TOCA ARREGLAR
 
     // Métodos para acceder a los datos desde los controladores
     public static List<Usuario> getUsuarios() {
@@ -264,6 +280,8 @@ public class Main extends Application {
 //        ejecutarModoConsola();
     }
 
+
+    //TODO: CREAR UNA NUEVA CLASE PARA INICIALIZAR LOS DATOS
     private static void inicializarDatos() {
         // Cargar usuarios del módulo de usuarios
         cargarUsuariosDesdeArchivo();
@@ -355,6 +373,7 @@ public class Main extends Application {
             crearUsuariosDefecto();
         }
     }
+    //TODO: METODOS QUE SOLO SON EJEMPLO SE PUEDEN BORRAR?
 
     // Método para crear usuarios por defecto si no se pueden cargar del archivo
     private static void crearUsuariosDefecto() {
@@ -372,6 +391,9 @@ public class Main extends Application {
         logrosDisponibles.add(new Logro("Coleccionista", "Obtener 5 logros", 300));
         System.out.println(">>> Logros predeterminados cargados: " + logrosDisponibles.size());
     }
+
+    //TODO: METODO DE EJEMPLO, SE PUEDE BORRAR?
+
     private static void inicializarDesafiosEjemplo() {
         // Solo crear desafíos de ejemplo si no hay ninguno
         if (desafiosDisponibles.isEmpty()) {
