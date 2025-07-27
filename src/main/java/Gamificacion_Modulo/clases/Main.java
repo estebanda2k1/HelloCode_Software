@@ -189,10 +189,8 @@ public class Main extends Application {
     private static void inicializarDatos() {
         // Cargar usuarios del módulo de usuarios
         cargarUsuariosDesdeArchivo();
-
         // Crear automáticamente progresos para todos los usuarios cargados
         crearProgresoEstudiante();
-
         // Inicializar logros predeterminados
         inicializarLogros();
 
@@ -263,7 +261,7 @@ public class Main extends Application {
 
         }
     }
-    //TODO: METODOS QUE SOLO SON EJEMPLO SE PUEDEN BORRAR?
+    //TODO: Mover a alguna clase que maneje el inicializador de logros
 
     private static void inicializarLogros() {
         logrosDisponibles.add(new Logro("Principiante", "Completar tu primer desafio",  100));
@@ -272,5 +270,4 @@ public class Main extends Application {
         logrosDisponibles.add(new Logro("Coleccionista", "Obtener 5 logros", 300));
         System.out.println(">>> Logros predeterminados cargados: " + logrosDisponibles.size());
     }
-
 }

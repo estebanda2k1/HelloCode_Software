@@ -215,9 +215,9 @@ public class SimularActividadController implements Initializable {
             
             // Completar actividades en el desafío
             if (desafioSeleccionado instanceof DesafioSemanal) {
-                ((DesafioSemanal) desafioSeleccionado).actualizarAavance(actividades);
+                ((DesafioSemanal) desafioSeleccionado).actualizarAvance(actividades);
             } else if (desafioSeleccionado instanceof DesafioMensual) {
-                ((DesafioMensual) desafioSeleccionado).actualizarActividades(actividades);
+                ((DesafioMensual) desafioSeleccionado).actualizarAvance(actividades);
             }
             
             // Evaluar progreso y logros

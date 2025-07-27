@@ -21,7 +21,7 @@ public class DesafioSemanal extends Desafio {
         return this.leccionesCompletadas >= super.meta;
     }
 
-    public void actualizarAavance (Integer cantidad) {
+    public void actualizarAvance(Integer cantidad) {
         this.leccionesCompletadas += cantidad;
     }
 

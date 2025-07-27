@@ -25,6 +25,7 @@ public class Logro {
     public int getPuntajeUmbral() { return puntajeUmbral; }
 
     public int getPuntos(){
+
         return 300;
     }
 }

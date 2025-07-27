@@ -23,14 +23,14 @@ public class DesafioMensual extends Desafio {
         return actividadesCompletadas >= objetivoMensual;
     }
 
-    public void actualizarActividades(Integer cantidad) {
+    public void actualizarAvance(Integer cantidad) {
         this.actividadesCompletadas += cantidad;
         System.out.println(">> Actividades mensuales: " + actividadesCompletadas + "/" + objetivoMensual);
     }
 
     public void registrarLeccion() {
         this.leccionesCompletadas++;
-        actualizarActividades(1);
+        actualizarAvance(1);
     }
 
     public Double getProgreso() {
