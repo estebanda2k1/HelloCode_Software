@@ -263,9 +263,7 @@ public class SimularActividadController implements Initializable {
                     }
                 }
             }
-            
-            // Actualizar las interfaces
-            Main.notificarActualizacionInterface();
+
             
             // Actualizar información y desafíos
             actualizarInfoUsuario();

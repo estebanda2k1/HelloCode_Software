@@ -40,9 +40,7 @@ public class RankingController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println(">>> Controlador de Ranking inicializado");
-        
-        // Registrar este controlador para recibir notificaciones
-        Main.registrarRankingController(this);
+
         
         // Configurar hover effects para botones
         configurarHoverEffects();
@@ -280,9 +278,4 @@ public class RankingController implements Initializable {
         public int getPuntos() { return puntos; }
     }
 
-    // Método para limpiar recursos al cerrar
-    public void cleanup() {
-        Main.desregistrarRankingController();
-        System.out.println(">>> Controlador de Ranking limpiado");
-    }
 } 

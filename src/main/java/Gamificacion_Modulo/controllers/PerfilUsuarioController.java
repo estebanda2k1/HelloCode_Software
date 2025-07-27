@@ -264,7 +264,6 @@ public class PerfilUsuarioController {
             System.out.println(">>> Controlador de Perfil de Usuario inicializado");
             
             // Registrar este controlador para recibir notificaciones
-            Main.registrarPerfilController(this);
             
             // Cargar estudiantes y datos iniciales
             cargarEstudiantesEnComboBox();
@@ -464,10 +463,5 @@ public class PerfilUsuarioController {
             e.printStackTrace();
         }
     }
-    
-    // Método para limpiar recursos al cerrar
-    public void cleanup() {
-        Main.desregistrarPerfilController();
-        System.out.println(">>> Controlador de Perfil limpiado");
-    }
+
 }

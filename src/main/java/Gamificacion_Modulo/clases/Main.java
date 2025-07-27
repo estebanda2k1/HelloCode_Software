@@ -18,6 +18,30 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    public static void main(String[] args) {
+        // Inicializar datos del sistema
+        inicializarDatos();
+
+        // Iniciar la interfaz gráfica en un hilo separado
+        Thread guiThread = new Thread(() -> {
+            try {
+                launch();
+            } catch (Exception e) {
+                System.err.println("Error al iniciar interfaz gráfica: " + e.getMessage());
+            }
+        });
+
+        guiThread.setDaemon(false); // Mantener la aplicación viva
+        guiThread.start();
+
+        // Esperar un momento para que la GUI se inicialice
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
     //TODO: Cambiar todos estos datos a clases que controlen y llamen
     private static final List<Usuario> usuarios = new ArrayList<>();
     private static final List<Logro> logrosDisponibles = new ArrayList<>();
@@ -27,10 +51,6 @@ public class Main extends Application {
 
     // Campo para almacenar el Stage principal para navegación
     private static Stage primaryStage;
-
-    // Referencias a controladores activos para notificaciones
-    private static Object currentPerfilController = null;
-    private static Object currentRankingController = null;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -69,8 +89,6 @@ public class Main extends Application {
                 System.err.println("Error al cargar Desafios.fxml: " + e2.getMessage());
                 e2.printStackTrace();
 
-                // Fallback final: mostrar ventana simple si falla todo
-                mostrarVentanaSimple(stage);
             }
         }
     }
@@ -112,90 +130,7 @@ public class Main extends Application {
         }
     }
 
-
-    //TODO: METODO QUE NO SE DONDE SE USA XD
-
-    // Método para obtener referencia del Stage principal
-    public static Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
-    //TODO: METODOS REGISTRAR QUE SE PUEDE BORRAR PORQUE SOLO FUNCIONA EN CONSOLA
-    // Métodos para gestión de controladores activos
-    public static void registrarPerfilController(Object controller) {
-        currentPerfilController = controller;
-        System.out.println(">>> Controlador de Perfil registrado para notificaciones");
-    }
-
-    public static void registrarRankingController(Object controller) {
-        currentRankingController = controller;
-        System.out.println(">>> Controlador de Ranking registrado para notificaciones");
-    }
-    //TODO: LO MISMO DE REGISTRAR, SOLO SALTA EN CONSOLA
-    public static void desregistrarPerfilController() {
-        currentPerfilController = null;
-        System.out.println(">>> Controlador de Perfil desregistrado");
-    }
-
-    public static void desregistrarRankingController() {
-        currentRankingController = null;
-        System.out.println(">>> Controlador de Ranking desregistrado");
-    }
-
-
-    //TODO: METODO QUE SE PUEDE BORRAR
-    // Método para notificar actualizaciones a las interfaces
-    public static void notificarActualizacionInterface() {
-        System.out.println(">>> Notificando actualización a interfaces activas...");
-
-        // Usar Platform.runLater para ejecutar en el hilo de JavaFX
-        try {
-            if (primaryStage != null) {
-                javafx.application.Platform.runLater(() -> {
-                    try {
-                        if (currentPerfilController != null) {
-                            currentPerfilController.getClass().getMethod("actualizarDatosPerfil").invoke(currentPerfilController);
-                            System.out.println(">>> Perfil actualizado en hilo FX");
-                        }
-                        if (currentRankingController != null) {
-                            currentRankingController.getClass().getMethod("cargarRanking").invoke(currentRankingController);
-                            System.out.println(">>> Ranking actualizado en hilo FX");
-                        }
-                    } catch (Exception e) {
-                        System.err.println("Error al actualizar GUI: " + e.getMessage());
-                    }
-                });
-            }
-        } catch (Exception e) {
-            System.err.println("Error al notificar actualización: " + e.getMessage());
-        }
-    }
-
-
-    //TODO: METODO QUE SE PUEDE BORRAR, SOLO SE MUESTRA COMO MENSAJE DE ADVERTENCIA DE NO CARGAR LA GUI
-
-    private void mostrarVentanaSimple(Stage stage) {
-        StackPane layout = new StackPane();
-        Button button = new Button("Sistema de Gamificación");
-        button.setOnAction(actionEvent -> {
-            System.out.println("Interfaz gráfica no disponible. Usa la consola.");
-//            mostrarMenuConsola();
-        });
-
-        layout.getChildren().add(button);
-        Scene scene = new Scene(layout, 393, 852);
-        stage.setScene(scene);
-        stage.setTitle("Sistema de Gamificación - Modo Consola");
-        stage.show();
-    }
-
-
-    //TODO: METODO SIN USAR
-    public static void mostrarGUI() {
-        System.out.println(">>> Iniciando interfaz gráfica...");
-        launch();
-    }
-    //TODO: METODO SOLO PARA CONSOLA
+    //TODO: METODO SUPER IMPORTANTE PARA CARGAR DATOS DESDE OTROS MÓDULOS
 
     // Método para inicializar datos cuando se navega desde otro módulo
     public static void inicializarDesdeModuloExterno() {
@@ -205,7 +140,7 @@ public class Main extends Application {
         } else {
             System.out.println(">>> Módulo de gamificación ya inicializado (" + usuarios.size() + " usuarios)");
             // Recargar usuarios para sincronización automática
-            recargarUsuarios();
+            crearProgresoEstudiante();
         }
 
         // Debug: Mostrar usuarios cargados
@@ -250,60 +185,26 @@ public class Main extends Application {
         return progresos;
     }
 
-    public static void main(String[] args) {
-        // Inicializar datos del sistema
-        inicializarDatos();
-
-        // Iniciar la interfaz gráfica en un hilo separado
-        Thread guiThread = new Thread(() -> {
-            try {
-//                System.out.println(">>> Iniciando interfaz gráfica...");
-                launch();
-            } catch (Exception e) {
-                System.err.println("Error al iniciar interfaz gráfica: " + e.getMessage());
-            }
-        });
-
-        guiThread.setDaemon(false); // Mantener la aplicación viva
-        guiThread.start();
-
-        // Esperar un momento para que la GUI se inicialice
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-
-        // Ejecutar la consola en el hilo principal
-        System.out.println(">>> Interfaz de consola lista para usar");
-        System.out.println(">>> Utiliza la consola para simular actividades y ver cambios en tiempo real en la GUI\n");
-//        ejecutarModoConsola();
-    }
-
-
-    //TODO: CREAR UNA NUEVA CLASE PARA INICIALIZAR LOS DATOS
+    //TODO: CREAR UNA NUEVA CLASE PARA INICIALIZAR LOS DATOS, se quito el bucle porque hacia lo mismo de crearProgresoEstudiante
     private static void inicializarDatos() {
         // Cargar usuarios del módulo de usuarios
         cargarUsuariosDesdeArchivo();
 
         // Crear automáticamente progresos para todos los usuarios cargados
-        for (Usuario usuario : usuarios) {
-            ProgresoEstudiante progreso = new ProgresoEstudiante(usuario);
-            progresos.add(progreso);
-            System.out.println(">>> Progreso creado para usuario: " + usuario.getNombre());
-        }
+        crearProgresoEstudiante();
 
         // Inicializar logros predeterminados
         inicializarLogros();
 
-        // Inicializar desafíos de ejemplo
-        inicializarDesafiosEjemplo();
     }
 
     // Método público para recargar usuarios (para sincronización)
-    public static void recargarUsuarios() {
+    /**
+     * Se cambio el nombre a recargarUsuarios para entender que este metodo se encarga de crear el progreso por cada estudiante
+     * que haya en el sistema
+     * */
+    public static void crearProgresoEstudiante() {
         try {
-            List<Usuario> usuariosAnteriores = new ArrayList<>(usuarios);
             usuarios.clear();
             cargarUsuariosDesdeArchivo();
 
@@ -318,9 +219,6 @@ public class Main extends Application {
                 }
             }
 
-            // Notificar a la GUI sobre la actualización
-            notificarActualizacionInterface();
-
             System.out.println(">>> Usuarios recargados exitosamente. Total: " + usuarios.size());
 
         } catch (Exception e) {
@@ -332,14 +230,6 @@ public class Main extends Application {
     private static void cargarUsuariosDesdeArchivo() {
         try {
             InputStream inputStream = new FileInputStream(new File("src/main/java/Modulo_Usuario/Usuarios/usuarios.txt"));
-//            InputStream inputStream = Main.class.getResourceAsStream("/Modulo_Usuario/Usuarios/usuarios.txt");
-
-
-            if (inputStream == null) {
-                System.err.println(">>> No se pudo encontrar el archivo de usuarios. Creando usuarios por defecto.");
-                crearUsuariosDefecto();
-                return;
-            }
 
             try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
                 String linea;
@@ -364,25 +254,16 @@ public class Main extends Application {
 
             if (usuarios.isEmpty()) {
                 System.out.println(">>> No se encontraron usuarios válidos. Creando usuarios por defecto.");
-                crearUsuariosDefecto();
+
             }
 
         } catch (Exception e) {
             System.err.println(">>> Error al cargar usuarios: " + e.getMessage());
             e.printStackTrace();
-            crearUsuariosDefecto();
+
         }
     }
     //TODO: METODOS QUE SOLO SON EJEMPLO SE PUEDEN BORRAR?
-
-    // Método para crear usuarios por defecto si no se pueden cargar del archivo
-    private static void crearUsuariosDefecto() {
-        Usuario admin = new Usuario("admin", "1234", "Administrador", "admin@email.com");
-        Usuario usuario1 = new Usuario("usuario1", "abc", "Usuario Demo", "usuario1@email.com");
-        usuarios.add(admin);
-        usuarios.add(usuario1);
-        System.out.println(">>> Usuarios por defecto creados");
-    }
 
     private static void inicializarLogros() {
         logrosDisponibles.add(new Logro("Principiante", "Completar tu primer desafio",  100));
@@ -392,26 +273,4 @@ public class Main extends Application {
         System.out.println(">>> Logros predeterminados cargados: " + logrosDisponibles.size());
     }
 
-    //TODO: METODO DE EJEMPLO, SE PUEDE BORRAR?
-
-    private static void inicializarDesafiosEjemplo() {
-        // Solo crear desafíos de ejemplo si no hay ninguno
-        if (desafiosDisponibles.isEmpty()) {
-            // Crear algunos desafíos de ejemplo con los logros disponibles
-            List<Logro> logrosBasicos = new ArrayList<>();
-            if (!logrosDisponibles.isEmpty()) {
-                logrosBasicos.add(logrosDisponibles.get(0)); // Logro principiante
-            }
-
-            DesafioSemanal desafioSemanalEjemplo1 = new DesafioSemanal(5, 200, logrosBasicos);
-            DesafioSemanal desafioSemanalEjemplo2 = new DesafioSemanal(10, 200, logrosBasicos);
-            DesafioMensual desafioMensualEjemplo = new DesafioMensual(25, 200, logrosBasicos);
-
-            desafiosDisponibles.add(desafioSemanalEjemplo1);
-            desafiosDisponibles.add(desafioSemanalEjemplo2);
-            desafiosDisponibles.add(desafioMensualEjemplo);
-
-            System.out.println(">>> Desafíos de ejemplo creados: " + desafiosDisponibles.size());
-        }
-    }
 }
